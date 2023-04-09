@@ -4,11 +4,11 @@
   
     
     <entry>
-      <title>MarkDown基本语法</title>
-      <link href="/MarkDown%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/"/>
-      <url>/MarkDown%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/</url>
+      <title>Hexo Template</title>
+      <link href="/hello-template/"/>
+      <url>/hello-template/</url>
       
-        <content type="html"><![CDATA[<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><ol><li>有序列表1</li><li>有序列表2</li><li>有序列表3</li></ol><p>‘*’ ‘-‘ ‘+’可以创建无序列表</p><ul><li>无序列表</li></ul><ul><li>无序列表</li></ul><ul><li>无序列表</li></ul><hr><blockquote><p>‘&gt;’用于创建块引用</p><blockquote><p>‘&gt;&gt;’嵌套块引用</p><blockquote><p>‘&gt;&gt;&gt;’可以嵌套很多层</p></blockquote></blockquote></blockquote><hr><p>两个” &#39;‘’ “之间可以写代码</p><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">fun</span>()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;hello,world&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;this is code&#x27;</span>) <span class="comment">#just a comment</span></span><br></pre></td></tr></table></figure><p>在两个’*‘之间可以创建<em>斜体</em></p><p>在两个’**‘之间可以创建 <strong>加粗</strong></p><p>在两个’***‘之间可以创建<br><em><strong>加粗斜体</strong></em></p><p>“![描述](address)”创建图片<br><img src="/../img/neko.jpeg" alt="neko"></p><p>“[名称](url)”创建网页链接<br><a href="https://www.baidu.com/">百度</a></p><p>markdown支持html语法,使用&lt;u&gt;标签来创建<br><u>下划线</u></p><p>在文字后跟”[^内容]”即可创建<br>脚注<a href="%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AA%E8%84%9A%E6%B3%A8">^1</a></p>]]></content>
+        <content type="html"><![CDATA[<p>welcome to my blog!</p>]]></content>
       
       
       
@@ -17,13 +17,25 @@
     
     
     <entry>
-      <title>Hexo Template</title>
-      <link href="/hello-template/"/>
-      <url>/hello-template/</url>
+      <title>MarkDown基本语法</title>
+      <link href="/MarkDown%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/"/>
+      <url>/MarkDown%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/</url>
       
-        <content type="html"><![CDATA[<p>welcome to my blog!</p>]]></content>
+        <content type="html"><![CDATA[<h1 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h1><h2 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h2><ol><li>有序列表1</li><li>有序列表2</li><li>有序列表3</li></ol><h2 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h2><p>‘*’ ‘-‘ ‘+’可以创建无序列表</p><ul><li>无序列表</li></ul><ul><li>无序列表</li></ul><ul><li>无序列表</li></ul><h1 id="块引用"><a href="#块引用" class="headerlink" title="块引用"></a>块引用</h1><blockquote><p>‘&gt;’用于创建块引用</p><blockquote><p>‘&gt;&gt;’嵌套块引用</p><blockquote><p>‘&gt;&gt;&gt;’可以嵌套很多层</p></blockquote></blockquote></blockquote><h1 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h1><p>两个” &#39;‘’ “之间可以写代码</p><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">fun</span>():</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">6</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;hello,world&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;this is code&#x27;</span>) <span class="comment">#just a comment</span></span><br></pre></td></tr></table></figure><h1 id="图片和链接"><a href="#图片和链接" class="headerlink" title="图片和链接"></a>图片和链接</h1><p>“![描述](address)”创建图片<br><img src="/../img/neko.jpeg" alt="neko"></p><p>“[名称](url)”创建网页链接<br><a href="https://www.baidu.com/">百度</a></p><h1 id="文字"><a href="#文字" class="headerlink" title="文字"></a>文字</h1><p>在两个’*‘之间可以创建<em>斜体</em></p><p>在两个’**‘之间可以创建 <strong>加粗</strong></p><p>在两个’***‘之间可以创建<br><em><strong>加粗斜体</strong></em><br>markdown支持html语法,使用&lt;u&gt;标签来创建<br><u>下划线</u></p><p>在文字后跟”[^内容]”即可创建<br>脚注<a href="%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AA%E8%84%9A%E6%B3%A8">^1</a></p>]]></content>
       
       
+      <categories>
+          
+          <category> 日常学习 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 记录 </tag>
+            
+        </tags>
       
     </entry>
     

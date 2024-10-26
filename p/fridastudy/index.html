@@ -293,132 +293,146 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#frida对应关系表">frida对应关系表</a></li>
-  </ol>
-
-  <ol>
-    <li><a href="#frida命令参数">frida命令参数</a></li>
-    <li><a href="#列出手机进程信息">列出手机进程信息</a></li>
-    <li><a href="#frida注入进程">frida注入进程</a></li>
-  </ol>
-
-  <ol>
-    <li><a href="#lab1-overloadimplement-method">lab1 Overload&amp;Implement Method</a></li>
-    <li><a href="#lab2-callstaticmethod">lab2 CallStaticMethod</a></li>
-    <li><a href="#lab3-modifystaticvalue">lab3 ModifyStaticValue</a></li>
-    <li><a href="#lab4-callinstancemethod">lab4 CallInstanceMethod</a></li>
-    <li><a href="#lab5-findinstance">lab5 FindInstance</a></li>
-    <li><a href="#lab6-newinstance">lab6 NewInstance</a></li>
-    <li><a href="#lab7-hookconstructor">lab7 HookConstructor</a></li>
-    <li><a href="#lab8-hooknaticefunc">lab8 HookNaticeFunc</a></li>
-    <li><a href="#lab9-replacenativefuncretval">lab9 ReplaceNativeFuncRetval</a></li>
-    <li><a href="#lab10-callnativefunc">lab10 CallNativeFunc</a></li>
-    <li><a href="#lab11-patchnativeinstruction">lab11 PatchNativeInstruction</a></li>
-  </ol>
-
-  <ol>
-    <li><a href="#frida的数据结构">Frida的数据结构</a>
+    <li><a href="#一-frida简介">一. Frida简介</a></li>
+    <li><a href="#二-frida环境配置">二. Frida环境配置</a>
       <ol>
-        <li><a href="#数组">数组</a></li>
+        <li><a href="#frida对应关系表">frida对应关系表</a></li>
       </ol>
     </li>
-    <li><a href="#打印枚举操作">打印/枚举操作</a>
+    <li><a href="#三-frida常用命令">三. Frida常用命令</a>
       <ol>
-        <li><a href="#show-stacktrace">Show StackTrace</a></li>
-        <li><a href="#枚举类的所有属性和方法">枚举类的所有属性和方法</a></li>
-        <li><a href="#打印类实例的详细信息">打印类/实例的详细信息</a></li>
-        <li><a href="#枚举所有已加载类">枚举所有已加载类</a></li>
+        <li><a href="#frida命令参数">frida命令参数</a></li>
+        <li><a href="#列出手机进程信息">列出手机进程信息</a></li>
+        <li><a href="#frida注入进程">frida注入进程</a></li>
       </ol>
     </li>
-    <li><a href="#hook-java类方法">Hook Java类/方法</a>
+    <li><a href="#四-frida-labs">四. Frida-labs</a>
       <ol>
-        <li><a href="#hook内部类和匿名类">hook内部类和匿名类</a></li>
-        <li><a href="#hook类的所有方法">hook类的所有方法</a></li>
-        <li><a href="#注册java类并调用">注册java类并调用</a></li>
-        <li><a href="#hook只在指定函数内生效">hook只在指定函数内生效</a></li>
-        <li><a href="#定位接口抽象类的实现类">定位接口/抽象类的实现类</a></li>
+        <li><a href="#lab1-overloadimplement-method">lab1 Overload&amp;Implement Method</a></li>
+        <li><a href="#lab2-callstaticmethod">lab2 CallStaticMethod</a></li>
+        <li><a href="#lab3-modifystaticvalue">lab3 ModifyStaticValue</a></li>
+        <li><a href="#lab4-callinstancemethod">lab4 CallInstanceMethod</a></li>
+        <li><a href="#lab5-findinstance">lab5 FindInstance</a></li>
+        <li><a href="#lab6-newinstance">lab6 NewInstance</a></li>
+        <li><a href="#lab7-hookconstructor">lab7 HookConstructor</a></li>
+        <li><a href="#lab8-hooknaticefunc">lab8 HookNaticeFunc</a></li>
+        <li><a href="#lab9-replacenativefuncretval">lab9 ReplaceNativeFuncRetval</a></li>
+        <li><a href="#lab10-callnativefunc">lab10 CallNativeFunc</a></li>
+        <li><a href="#lab11-patchnativeinstruction">lab11 PatchNativeInstruction</a></li>
       </ol>
     </li>
-    <li><a href="#dex操作">Dex操作</a>
+    <li><a href="#五-fridahook进阶">五. FridaHook进阶</a>
       <ol>
-        <li><a href="#注入dex文件">注入dex文件</a></li>
-        <li><a href="#hook动态加载的dex">hook动态加载的dex</a></li>
+        <li><a href="#frida的数据结构">Frida的数据结构</a>
+          <ol>
+            <li><a href="#数组">数组</a></li>
+          </ol>
+        </li>
+        <li><a href="#打印枚举操作">打印/枚举操作</a>
+          <ol>
+            <li><a href="#show-stacktrace">Show StackTrace</a></li>
+            <li><a href="#枚举类的所有属性和方法">枚举类的所有属性和方法</a></li>
+            <li><a href="#打印类实例的详细信息">打印类/实例的详细信息</a></li>
+            <li><a href="#枚举所有已加载类">枚举所有已加载类</a></li>
+          </ol>
+        </li>
+        <li><a href="#hook-java类方法">Hook Java类/方法</a>
+          <ol>
+            <li><a href="#hook内部类和匿名类">hook内部类和匿名类</a></li>
+            <li><a href="#hook类的所有方法">hook类的所有方法</a></li>
+            <li><a href="#注册java类并调用">注册java类并调用</a></li>
+            <li><a href="#hook只在指定函数内生效">hook只在指定函数内生效</a></li>
+            <li><a href="#定位接口抽象类的实现类">定位接口/抽象类的实现类</a></li>
+          </ol>
+        </li>
+        <li><a href="#dex操作">Dex操作</a>
+          <ol>
+            <li><a href="#注入dex文件">注入dex文件</a></li>
+            <li><a href="#hook动态加载的dex">hook动态加载的dex</a></li>
+          </ol>
+        </li>
+        <li><a href="#hook-java数据结构待完善">Hook Java数据结构(待完善)</a>
+          <ol>
+            <li><a href="#hashmap">HashMap</a></li>
+            <li><a href="#arraylist">ArrayList</a></li>
+            <li><a href="#string">String</a></li>
+            <li><a href="#stringfactory">StringFactory</a></li>
+            <li><a href="#stringbuilder">StringBuilder</a></li>
+          </ol>
+        </li>
+        <li><a href="#hook-标准加密库待完善">Hook 标准加密库(待完善)</a></li>
+        <li><a href="#hook-android组件待完善">Hook Android组件(待完善)</a>
+          <ol>
+            <li><a href="#toast">Toast</a></li>
+          </ol>
+        </li>
+        <li><a href="#native-hook">Native Hook</a></li>
+        <li><a href="#其他操作">其他操作</a>
+          <ol>
+            <li><a href="#frida写文件">frida写文件</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
-    <li><a href="#hook-java数据结构待完善">Hook Java数据结构(待完善)</a>
+    <li><a href="#六-fridatools">六. FridaTools</a>
       <ol>
-        <li><a href="#hashmap">HashMap</a></li>
-        <li><a href="#arraylist">ArrayList</a></li>
-        <li><a href="#string">String</a></li>
-        <li><a href="#stringfactory">StringFactory</a></li>
-        <li><a href="#stringbuilder">StringBuilder</a></li>
+        <li><a href="#objection">Objection</a>
+          <ol>
+            <li><a href="#objection常用指令">objection常用指令</a></li>
+            <li><a href="#repl常用指令">REPL常用指令</a></li>
+          </ol>
+        </li>
+        <li><a href="#wallbreaker">WallBreaker</a></li>
+        <li><a href="#frida-dexdump">frida-dexdump</a></li>
       </ol>
     </li>
-    <li><a href="#hook-标准加密库待完善">Hook 标准加密库(待完善)</a></li>
-    <li><a href="#hook-android组件待完善">Hook Android组件(待完善)</a>
+    <li><a href="#七-frida持久化">七. Frida持久化</a>
       <ol>
-        <li><a href="#toast">Toast</a></li>
+        <li><a href="#frida-inject">frida-inject</a></li>
+        <li><a href="#frida-gadget">frida-gadget</a></li>
       </ol>
     </li>
-    <li><a href="#native-hook">Native Hook</a></li>
-    <li><a href="#其他操作">其他操作</a>
+    <li><a href="#八-fridapython">八. FridaPython</a>
       <ol>
-        <li><a href="#frida写文件">frida写文件</a></li>
+        <li><a href="#python连接设备">python连接设备</a>
+          <ol>
+            <li><a href="#attach方式">attach方式</a></li>
+            <li><a href="#spawn方式">spawn方式</a></li>
+            <li><a href="#连接非标准端口设备">连接非标准端口设备</a></li>
+          </ol>
+        </li>
+        <li><a href="#frida与python交互">frida与python交互</a>
+          <ol>
+            <li><a href="#send">send</a></li>
+            <li><a href="#recv">recv</a></li>
+          </ol>
+        </li>
+        <li><a href="#frida-rpc">frida RPC</a></li>
+        <li><a href="#frida-算法转发">frida 算法转发</a></li>
       </ol>
     </li>
-  </ol>
-
-  <ol>
-    <li><a href="#objection">Objection</a>
+    <li><a href="#九-frida逆向实战">九. Frida逆向实战</a>
       <ol>
-        <li><a href="#objection常用指令">objection常用指令</a></li>
-        <li><a href="#repl常用指令">REPL常用指令</a></li>
+        <li><a href="#过vpn检测">过vpn检测</a></li>
+        <li><a href="#破解极简记账vip">破解极简记账VIP</a></li>
       </ol>
     </li>
-    <li><a href="#wallbreaker">WallBreaker</a></li>
-    <li><a href="#frida-dexdump">frida-dexdump</a></li>
-  </ol>
-
-  <ol>
-    <li><a href="#frida-inject">frida-inject</a></li>
-    <li><a href="#frida-gadget">frida-gadget</a></li>
-  </ol>
-
-  <ol>
-    <li><a href="#python连接设备">python连接设备</a>
+    <li><a href="#十-frida-api">十. Frida API</a>
       <ol>
-        <li><a href="#attach方式">attach方式</a></li>
-        <li><a href="#spawn方式">spawn方式</a></li>
-        <li><a href="#连接非标准端口设备">连接非标准端口设备</a></li>
+        <li><a href="#java-bridge">Java Bridge</a></li>
+        <li><a href="#memory">Memory</a></li>
+        <li><a href="#nativepointer">NativePointer</a></li>
+        <li><a href="#module">Module</a></li>
+        <li><a href="#debug-symbol">Debug Symbol</a>
+          <ol>
+            <li><a href="#debugsymbolfromaddressaddressdebugsymbolfromnamename">DebugSymbol.fromAddress(address)/DebugSymbol.fromName(name)</a></li>
+          </ol>
+        </li>
+        <li><a href="#common-api">Common API</a></li>
+        <li><a href="#table-of-api-contents">Table Of API Contents</a></li>
       </ol>
     </li>
-    <li><a href="#frida与python交互">frida与python交互</a>
-      <ol>
-        <li><a href="#send">send</a></li>
-        <li><a href="#recv">recv</a></li>
-      </ol>
-    </li>
-    <li><a href="#frida-rpc">frida RPC</a></li>
-    <li><a href="#frida-算法转发">frida 算法转发</a></li>
-  </ol>
-
-  <ol>
-    <li><a href="#过vpn检测">过vpn检测</a></li>
-    <li><a href="#破解极简记账vip">破解极简记账VIP</a></li>
-  </ol>
-
-  <ol>
-    <li><a href="#java-bridge">Java Bridge</a></li>
-    <li><a href="#memory">Memory</a></li>
-    <li><a href="#nativepointer">NativePointer</a></li>
-    <li><a href="#module">Module</a></li>
-    <li><a href="#debug-symbol">Debug Symbol</a>
-      <ol>
-        <li><a href="#debugsymbolfromaddressaddressdebugsymbolfromnamename">DebugSymbol.fromAddress(address)/DebugSymbol.fromName(name)</a></li>
-      </ol>
-    </li>
-    <li><a href="#common-api">Common API</a></li>
-    <li><a href="#table-of-api-contents">Table Of API Contents</a></li>
+    <li><a href="#references">References</a></li>
   </ol>
 </nav>
         </div>
@@ -534,55 +548,55 @@
 </h2><div class="table-wrapper"><table>
   <thead>
       <tr>
-          <th style="text-align: left">Android版本</th>
-          <th style="text-align: left">frida版本</th>
-          <th style="text-align: left">frida-tools版本</th>
-          <th style="text-align: left">python版本</th>
-          <th style="text-align: left">objection版本</th>
+          <th>Android版本</th>
+          <th>frida版本</th>
+          <th>frida-tools版本</th>
+          <th>python版本</th>
+          <th>objection版本</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left">android5-6</td>
-          <td style="text-align: left">frida12.3.6</td>
-          <td style="text-align: left"></td>
-          <td style="text-align: left">python=3.7</td>
-          <td style="text-align: left"></td>
+          <td>android5-6</td>
+          <td>frida12.3.6</td>
+          <td></td>
+          <td>python=3.7</td>
+          <td></td>
       </tr>
       <tr>
-          <td style="text-align: left">andorid7-8</td>
-          <td style="text-align: left">frida12.8.0</td>
-          <td style="text-align: left">frida-tools=5.3.0</td>
-          <td style="text-align: left">python=3.8</td>
-          <td style="text-align: left">objection=1.8.4</td>
+          <td>andorid7-8</td>
+          <td>frida12.8.0</td>
+          <td>frida-tools=5.3.0</td>
+          <td>python=3.8</td>
+          <td>objection=1.8.4</td>
       </tr>
       <tr>
-          <td style="text-align: left">andorid9-10</td>
-          <td style="text-align: left">frida14.2.14</td>
-          <td style="text-align: left">frida-tools=9.2.2</td>
-          <td style="text-align: left">python=3.8</td>
-          <td style="text-align: left">objection=1.11.0</td>
+          <td>andorid9-10</td>
+          <td>frida14.2.14</td>
+          <td>frida-tools=9.2.2</td>
+          <td>python=3.8</td>
+          <td>objection=1.11.0</td>
       </tr>
       <tr>
-          <td style="text-align: left">andorid10-12</td>
-          <td style="text-align: left">frida15.2.2</td>
-          <td style="text-align: left">frida-tools=11.0.0</td>
-          <td style="text-align: left">python=3.9/3.10</td>
-          <td style="text-align: left"></td>
+          <td>andorid10-12</td>
+          <td>frida15.2.2</td>
+          <td>frida-tools=11.0.0</td>
+          <td>python=3.9/3.10</td>
+          <td></td>
       </tr>
       <tr>
-          <td style="text-align: left">android10-12</td>
-          <td style="text-align: left">frida15+</td>
-          <td style="text-align: left"></td>
-          <td style="text-align: left">python=3.9/3.10</td>
-          <td style="text-align: left"></td>
+          <td>android10-12</td>
+          <td>frida15+</td>
+          <td></td>
+          <td>python=3.9/3.10</td>
+          <td></td>
       </tr>
       <tr>
-          <td style="text-align: left">android12+</td>
-          <td style="text-align: left">frida16.0.19</td>
-          <td style="text-align: left"></td>
-          <td style="text-align: left">python=3.10/3.11</td>
-          <td style="text-align: left"></td>
+          <td>android12+</td>
+          <td>frida16.0.19</td>
+          <td></td>
+          <td>python=3.10/3.11</td>
+          <td></td>
       </tr>
   </tbody>
 </table></div>

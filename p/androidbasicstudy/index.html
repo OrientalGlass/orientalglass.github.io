@@ -294,261 +294,275 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#11-andorid系统架构">1.1 Andorid系统架构</a></li>
-    <li><a href="#12-andorid应用开发特色">1.2 Andorid应用开发特色</a></li>
-    <li><a href="#13-搭建开发环境">1.3 搭建开发环境</a></li>
-    <li><a href="#14-分析安卓程序">1.4 分析安卓程序</a>
+    <li><a href="#第1章--启程">第1章  启程</a>
       <ol>
-        <li><a href="#141-project结构">1.4.1 Project结构</a></li>
-        <li><a href="#142-app目录">1.4.2 app目录</a></li>
+        <li><a href="#11-andorid系统架构">1.1 Andorid系统架构</a></li>
+        <li><a href="#12-andorid应用开发特色">1.2 Andorid应用开发特色</a></li>
+        <li><a href="#13-搭建开发环境">1.3 搭建开发环境</a></li>
+        <li><a href="#14-分析安卓程序">1.4 分析安卓程序</a>
+          <ol>
+            <li><a href="#141-project结构">1.4.1 Project结构</a></li>
+            <li><a href="#142-app目录">1.4.2 app目录</a></li>
+          </ol>
+        </li>
+        <li><a href="#15-log-utils">1.5 Log Utils</a></li>
       </ol>
     </li>
-    <li><a href="#15-log-utils">1.5 Log Utils</a></li>
-  </ol>
-
-  <ol>
-    <li><a href="#21手动创建主活动">2.1手动创建主活动</a>
+    <li><a href="#第2章-探究活动">第2章 探究活动</a>
       <ol>
-        <li><a href="#211-创建空白activity">2.1.1 创建空白Activity</a></li>
-        <li><a href="#212-创建布局文件">2.1.2 创建布局文件</a></li>
-        <li><a href="#213-注册主活动">2.1.3 注册主活动</a></li>
+        <li><a href="#21手动创建主活动">2.1手动创建主活动</a>
+          <ol>
+            <li><a href="#211-创建空白activity">2.1.1 创建空白Activity</a></li>
+            <li><a href="#212-创建布局文件">2.1.2 创建布局文件</a></li>
+            <li><a href="#213-注册主活动">2.1.3 注册主活动</a></li>
+          </ol>
+        </li>
+        <li><a href="#22-intent跳转活动">2.2 Intent跳转活动</a>
+          <ol>
+            <li><a href="#221-显式跳转">2.2.1 显式跳转</a></li>
+            <li><a href="#222-隐式跳转">2.2.2 隐式跳转</a></li>
+            <li><a href="#223-更多隐式intent的用法">2.2.3 更多隐式Intent的用法</a></li>
+            <li><a href="#224-向下一个活动传递数据">2.2.4 向下一个活动传递数据</a></li>
+            <li><a href="#225-返回数据给上一个活动">2.2.5 返回数据给上一个活动</a></li>
+          </ol>
+        </li>
+        <li><a href="#23-活动的生命周期">2.3 活动的生命周期</a>
+          <ol>
+            <li><a href="#231-返回栈">2.3.1 返回栈</a></li>
+            <li><a href="#232-活动状态">2.3.2 活动状态</a></li>
+            <li><a href="#233-活动生存期">2.3.3 活动生存期</a></li>
+            <li><a href="#234-体验活动的生命周期">2.3.4 体验活动的生命周期</a></li>
+            <li><a href="#235-活动被回收了怎么办">2.3.5 活动被回收了怎么办</a></li>
+          </ol>
+        </li>
+        <li><a href="#24-活动的启动模式">2.4 活动的启动模式</a></li>
+        <li><a href="#25-活动的最佳实践">2.5 活动的最佳实践</a>
+          <ol>
+            <li><a href="#251-了解当前界面对应活动">2.5.1 了解当前界面对应活动</a></li>
+            <li><a href="#252-随时随地退出程序">2.5.2 随时随地退出程序</a></li>
+            <li><a href="#253--启动活动的最佳写法">2.5.3  启动活动的最佳写法</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
-    <li><a href="#22-intent跳转活动">2.2 Intent跳转活动</a>
+    <li><a href="#第3章-ui开发">第3章 UI开发</a>
       <ol>
-        <li><a href="#221-显式跳转">2.2.1 显式跳转</a></li>
-        <li><a href="#222-隐式跳转">2.2.2 隐式跳转</a></li>
-        <li><a href="#223-更多隐式intent的用法">2.2.3 更多隐式Intent的用法</a></li>
-        <li><a href="#224-向下一个活动传递数据">2.2.4 向下一个活动传递数据</a></li>
-        <li><a href="#225-返回数据给上一个活动">2.2.5 返回数据给上一个活动</a></li>
+        <li><a href="#31-常用控件的使用">3.1 常用控件的使用</a>
+          <ol>
+            <li><a href="#320-toast">3.2.0 Toast</a></li>
+            <li><a href="#321-textview">3.2.1 TextView</a></li>
+            <li><a href="#322-button">3.2.2 Button</a></li>
+            <li><a href="#323-edittext">3.2.3 EditText</a></li>
+            <li><a href="#324-imageview">3.2.4 ImageView</a></li>
+            <li><a href="#325-progressbar">3.2.5 ProgressBar</a></li>
+            <li><a href="#326-alterdialog">3.2.6 AlterDialog</a></li>
+            <li><a href="#327-progressdialog">3.2.7 ProgressDialog</a></li>
+          </ol>
+        </li>
+        <li><a href="#33-4种基本布局">3.3 4种基本布局</a>
+          <ol>
+            <li><a href="#331-linearlayout">3.3.1 LinearLayout</a></li>
+            <li><a href="#332-relativelayout">3.3.2 RelativeLayout</a></li>
+            <li><a href="#333-framelayout">3.3.3 FrameLayout</a></li>
+            <li><a href="#334-百分比布局">3.3.4 百分比布局</a></li>
+          </ol>
+        </li>
+        <li><a href="#34-创建自定义控件">3.4 创建自定义控件</a>
+          <ol>
+            <li><a href="#341-引入布局">3.4.1 引入布局</a></li>
+            <li><a href="#342-自定义控件">3.4.2 自定义控件</a></li>
+          </ol>
+        </li>
+        <li><a href="#35-listview">3.5 ListView</a>
+          <ol>
+            <li><a href="#351-listview的简单用法">3.5.1 ListView的简单用法</a></li>
+            <li><a href="#352-定制listview的界面">3.5.2 定制ListView的界面</a></li>
+            <li><a href="#353-提升listview运行效率">3.5.3 提升ListView运行效率</a></li>
+            <li><a href="#354-listview的点击事件">3.5.4 ListView的点击事件</a></li>
+          </ol>
+        </li>
+        <li><a href="#36-recyclerview">3.6 RecyclerView</a>
+          <ol>
+            <li><a href="#361-recyclerview基本用法">3.6.1 RecyclerView基本用法</a></li>
+            <li><a href="#362-实现横向滚动和瀑布流布局">3.6.2 实现横向滚动和瀑布流布局</a></li>
+            <li><a href="#363-recyclerview的点击事件">3.6.3 RecyclerView的点击事件</a></li>
+          </ol>
+        </li>
+        <li><a href="#37-编写界面的最佳实践">3.7 编写界面的最佳实践</a>
+          <ol>
+            <li><a href="#371-制作nine-patch图片">3.7.1 制作Nine-Patch图片</a></li>
+            <li><a href="#372-编写聊天界面">3.7.2 编写聊天界面</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
-    <li><a href="#23-活动的生命周期">2.3 活动的生命周期</a>
+    <li><a href="#第4章-探究碎片">第4章 探究碎片</a>
       <ol>
-        <li><a href="#231-返回栈">2.3.1 返回栈</a></li>
-        <li><a href="#232-活动状态">2.3.2 活动状态</a></li>
-        <li><a href="#233-活动生存期">2.3.3 活动生存期</a></li>
-        <li><a href="#234-体验活动的生命周期">2.3.4 体验活动的生命周期</a></li>
-        <li><a href="#235-活动被回收了怎么办">2.3.5 活动被回收了怎么办</a></li>
+        <li><a href="#41-碎片是什么">4.1 碎片是什么</a></li>
+        <li><a href="#42-碎片的使用方式">4.2 碎片的使用方式</a>
+          <ol>
+            <li><a href="#421-碎片的简单用法">4.2.1 碎片的简单用法</a></li>
+            <li><a href="#422-动态加载碎片">4.2.2 动态加载碎片</a></li>
+          </ol>
+        </li>
+        <li><a href="#43-碎片的生命周期">4.3 碎片的生命周期</a></li>
+        <li><a href="#44-动态加载布局的技巧">4.4 动态加载布局的技巧</a></li>
+        <li><a href="#45-碎片的最佳实践">4.5 碎片的最佳实践</a></li>
       </ol>
     </li>
-    <li><a href="#24-活动的启动模式">2.4 活动的启动模式</a></li>
-    <li><a href="#25-活动的最佳实践">2.5 活动的最佳实践</a>
+    <li><a href="#第5章-广播机制">第5章 广播机制</a>
       <ol>
-        <li><a href="#251-了解当前界面对应活动">2.5.1 了解当前界面对应活动</a></li>
-        <li><a href="#252-随时随地退出程序">2.5.2 随时随地退出程序</a></li>
-        <li><a href="#253--启动活动的最佳写法">2.5.3  启动活动的最佳写法</a></li>
+        <li><a href="#51-广播机制简介">5.1 广播机制简介</a></li>
+        <li><a href="#52-接收系统广播">5.2 接收系统广播</a>
+          <ol>
+            <li><a href="#521-动态注册监听网络变化">5.2.1 动态注册监听网络变化</a></li>
+            <li><a href="#522-静态注册实现开机启动">5.2.2 静态注册实现开机启动</a></li>
+          </ol>
+        </li>
+        <li><a href="#53-发送自定义广播">5.3 发送自定义广播</a>
+          <ol>
+            <li><a href="#531-发送标准广播">5.3.1 发送标准广播</a></li>
+            <li><a href="#532-发送有序广播">5.3.2 发送有序广播</a></li>
+          </ol>
+        </li>
+        <li><a href="#54-使用本地广播">5.4 使用本地广播</a></li>
+        <li><a href="#55-广播实现强制下线功能">5.5 广播实现强制下线功能</a></li>
       </ol>
     </li>
-  </ol>
-
-  <ol>
-    <li><a href="#31-常用控件的使用">3.1 常用控件的使用</a>
+    <li><a href="#第6章-持久化技术">第6章 持久化技术</a>
       <ol>
-        <li><a href="#320-toast">3.2.0 Toast</a></li>
-        <li><a href="#321-textview">3.2.1 TextView</a></li>
-        <li><a href="#322-button">3.2.2 Button</a></li>
-        <li><a href="#323-edittext">3.2.3 EditText</a></li>
-        <li><a href="#324-imageview">3.2.4 ImageView</a></li>
-        <li><a href="#325-progressbar">3.2.5 ProgressBar</a></li>
-        <li><a href="#326-alterdialog">3.2.6 AlterDialog</a></li>
-        <li><a href="#327-progressdialog">3.2.7 ProgressDialog</a></li>
+        <li><a href="#61-持久化技术简介">6.1 持久化技术简介</a></li>
+        <li><a href="#62-文件存储">6.2 文件存储</a>
+          <ol>
+            <li><a href="#621-将数据存储到文件中">6.2.1 将数据存储到文件中</a></li>
+            <li><a href="#622-从文件中读取数据">6.2.2 从文件中读取数据</a></li>
+          </ol>
+        </li>
+        <li><a href="#63-sharedpreferences存储">6.3 SharedPreferences存储</a>
+          <ol>
+            <li><a href="#631-将数据存储到sharedpreferences">6.3.1 将数据存储到SharedPreferences</a></li>
+            <li><a href="#632-从sharedpreferences读取数据">6.3.2 从SharedPreferences读取数据</a></li>
+            <li><a href="#633-实现记住密码功能">6.3.3 实现记住密码功能</a></li>
+          </ol>
+        </li>
+        <li><a href="#64-sqlite数据库存储">6.4 SQLite数据库存储</a>
+          <ol>
+            <li><a href="#641-创建数据库">6.4.1 创建数据库</a></li>
+            <li><a href="#642-升级数据库">6.4.2 升级数据库</a></li>
+            <li><a href="#643-添加数据">6.4.3 添加数据</a></li>
+            <li><a href="#644-更新数据">6.4.4 更新数据</a></li>
+            <li><a href="#645-删除数据">6.4.5 删除数据</a></li>
+            <li><a href="#646-查询数据">6.4.6 查询数据</a></li>
+            <li><a href="#647-使用sql操作数据库">6.4.7 使用SQL操作数据库</a></li>
+          </ol>
+        </li>
+        <li><a href="#65-使用sqlite框架操作数据库">6.5 使用SQLite框架操作数据库</a></li>
       </ol>
     </li>
-    <li><a href="#33-4种基本布局">3.3 4种基本布局</a>
+    <li><a href="#第7章-内容提供器">第7章 内容提供器</a>
       <ol>
-        <li><a href="#331-linearlayout">3.3.1 LinearLayout</a></li>
-        <li><a href="#332-relativelayout">3.3.2 RelativeLayout</a></li>
-        <li><a href="#333-framelayout">3.3.3 FrameLayout</a></li>
-        <li><a href="#334-百分比布局">3.3.4 百分比布局</a></li>
+        <li><a href="#71-contentprovider简介">7.1 ContentProvider简介</a></li>
+        <li><a href="#72-运行时权限">7.2 运行时权限</a>
+          <ol>
+            <li><a href="#721-android权限机制">7.2.1 Android权限机制</a></li>
+            <li><a href="#722-程序运行时申请权限">7.2.2 程序运行时申请权限</a></li>
+          </ol>
+        </li>
+        <li><a href="#73-访问其他程序中的数据">7.3 访问其他程序中的数据</a>
+          <ol>
+            <li><a href="#731-contentprovider基本用法">7.3.1 ContentProvider基本用法</a></li>
+            <li><a href="#732-获取系统联系人">7.3.2 获取系统联系人</a></li>
+          </ol>
+        </li>
+        <li><a href="#74-创建自定义contentprovider">7.4 创建自定义ContentProvider</a>
+          <ol>
+            <li><a href="#741-创建contentprovider的步骤">7.4.1 创建ContentProvider的步骤</a></li>
+            <li><a href="#742-实现跨程序数据共享">7.4.2 实现跨程序数据共享</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
-    <li><a href="#34-创建自定义控件">3.4 创建自定义控件</a>
+    <li><a href="#第8章-运用手机多媒体">第8章 运用手机多媒体</a>
       <ol>
-        <li><a href="#341-引入布局">3.4.1 引入布局</a></li>
-        <li><a href="#342-自定义控件">3.4.2 自定义控件</a></li>
+        <li><a href="#81-使用通知">8.1 使用通知</a>
+          <ol>
+            <li><a href="#811-通知的基本用法">8.1.1 通知的基本用法</a></li>
+            <li><a href="#812-通知的进阶技巧">8.1.2 通知的进阶技巧</a></li>
+            <li><a href="#813-通知的高级功能">8.1.3 通知的高级功能</a></li>
+          </ol>
+        </li>
+        <li><a href="#82-调用摄像头和相册">8.2 调用摄像头和相册</a>
+          <ol>
+            <li><a href="#821-调用摄像头拍照">8.2.1 调用摄像头拍照</a></li>
+            <li><a href="#822-从相册中选择图片">8.2.2 从相册中选择图片</a></li>
+          </ol>
+        </li>
+        <li><a href="#83-播放多媒体文件">8.3 播放多媒体文件</a>
+          <ol>
+            <li><a href="#831-播放音频">8.3.1 播放音频</a></li>
+            <li><a href="#832-播放视频">8.3.2 播放视频</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
-    <li><a href="#35-listview">3.5 ListView</a>
+    <li><a href="#第9章-使用网络技术">第9章 使用网络技术</a>
       <ol>
-        <li><a href="#351-listview的简单用法">3.5.1 ListView的简单用法</a></li>
-        <li><a href="#352-定制listview的界面">3.5.2 定制ListView的界面</a></li>
-        <li><a href="#353-提升listview运行效率">3.5.3 提升ListView运行效率</a></li>
-        <li><a href="#354-listview的点击事件">3.5.4 ListView的点击事件</a></li>
+        <li><a href="#91-webview的用法">9.1 WebView的用法</a></li>
+        <li><a href="#92-使用http协议访问网络">9.2 使用HTTP协议访问网络</a>
+          <ol>
+            <li><a href="#921-使用httpurlconnection">9.2.1 使用HttpURLConnection</a></li>
+            <li><a href="#922-使用okhttp">9.2.2 使用OkHttp</a></li>
+          </ol>
+        </li>
+        <li><a href="#93-解析xml格式数据">9.3 解析XML格式数据</a>
+          <ol>
+            <li><a href="#931-pull解析方式">9.3.1 Pull解析方式</a></li>
+            <li><a href="#932-sax解析方式">9.3.2 SAX解析方式</a></li>
+          </ol>
+        </li>
+        <li><a href="#94-解析json格式数据">9.4 解析JSON格式数据</a>
+          <ol>
+            <li><a href="#941-使用jsonobject">9.4.1 使用JSONObject</a></li>
+            <li><a href="#942-使用gson">9.4.2 使用GSON</a></li>
+          </ol>
+        </li>
+        <li><a href="#95-网络编程最佳实践">9.5 网络编程最佳实践</a></li>
       </ol>
     </li>
-    <li><a href="#36-recyclerview">3.6 RecyclerView</a>
+    <li><a href="#第10章-探究服务">第10章 探究服务</a>
       <ol>
-        <li><a href="#361-recyclerview基本用法">3.6.1 RecyclerView基本用法</a></li>
-        <li><a href="#362-实现横向滚动和瀑布流布局">3.6.2 实现横向滚动和瀑布流布局</a></li>
-        <li><a href="#363-recyclerview的点击事件">3.6.3 RecyclerView的点击事件</a></li>
+        <li><a href="#101-服务是什么">10.1 服务是什么</a></li>
+        <li><a href="#102-android多线程编程">10.2 Android多线程编程</a>
+          <ol>
+            <li><a href="#1021-线程的基本用法">10.2.1 线程的基本用法</a></li>
+            <li><a href="#1022-在子线程中更新ui">10.2.2 在子线程中更新UI</a></li>
+            <li><a href="#1023-解析异步消息处理机制">10.2.3 解析异步消息处理机制</a></li>
+            <li><a href="#1024-使用asynctask">10.2.4 使用AsyncTask</a></li>
+          </ol>
+        </li>
+        <li><a href="#103-服务的基本用法">10.3 服务的基本用法</a>
+          <ol>
+            <li><a href="#1031-定义一个服务">10.3.1 定义一个服务</a></li>
+            <li><a href="#1032-启动和停止服务">10.3.2 启动和停止服务</a></li>
+            <li><a href="#1033-活动和服务进行通信">10.3.3 活动和服务进行通信</a></li>
+          </ol>
+        </li>
+        <li><a href="#104-服务的生命周期">10.4 服务的生命周期</a></li>
+        <li><a href="#105-服务的更多技巧">10.5 服务的更多技巧</a>
+          <ol>
+            <li><a href="#1051-使用前台服务">10.5.1 使用前台服务</a></li>
+            <li><a href="#1052-使用intentservice">10.5.2 使用IntentService</a></li>
+          </ol>
+        </li>
+        <li><a href="#106-服务的最佳实践-完整版的下载示例">10.6 服务的最佳实践-完整版的下载示例</a></li>
       </ol>
     </li>
-    <li><a href="#37-编写界面的最佳实践">3.7 编写界面的最佳实践</a>
+    <li><a href="#others">Others</a>
       <ol>
-        <li><a href="#371-制作nine-patch图片">3.7.1 制作Nine-Patch图片</a></li>
-        <li><a href="#372-编写聊天界面">3.7.2 编写聊天界面</a></li>
+        <li><a href="#gradle">Gradle</a></li>
+        <li><a href="#viewbinding">ViewBinding</a></li>
       </ol>
     </li>
-  </ol>
-
-  <ol>
-    <li><a href="#41-碎片是什么">4.1 碎片是什么</a></li>
-    <li><a href="#42-碎片的使用方式">4.2 碎片的使用方式</a>
-      <ol>
-        <li><a href="#421-碎片的简单用法">4.2.1 碎片的简单用法</a></li>
-        <li><a href="#422-动态加载碎片">4.2.2 动态加载碎片</a></li>
-      </ol>
-    </li>
-    <li><a href="#43-碎片的生命周期">4.3 碎片的生命周期</a></li>
-    <li><a href="#44-动态加载布局的技巧">4.4 动态加载布局的技巧</a></li>
-    <li><a href="#45-碎片的最佳实践">4.5 碎片的最佳实践</a></li>
-  </ol>
-
-  <ol>
-    <li><a href="#51-广播机制简介">5.1 广播机制简介</a></li>
-    <li><a href="#52-接收系统广播">5.2 接收系统广播</a>
-      <ol>
-        <li><a href="#521-动态注册监听网络变化">5.2.1 动态注册监听网络变化</a></li>
-        <li><a href="#522-静态注册实现开机启动">5.2.2 静态注册实现开机启动</a></li>
-      </ol>
-    </li>
-    <li><a href="#53-发送自定义广播">5.3 发送自定义广播</a>
-      <ol>
-        <li><a href="#531-发送标准广播">5.3.1 发送标准广播</a></li>
-        <li><a href="#532-发送有序广播">5.3.2 发送有序广播</a></li>
-      </ol>
-    </li>
-    <li><a href="#54-使用本地广播">5.4 使用本地广播</a></li>
-    <li><a href="#55-广播实现强制下线功能">5.5 广播实现强制下线功能</a></li>
-  </ol>
-
-  <ol>
-    <li><a href="#61-持久化技术简介">6.1 持久化技术简介</a></li>
-    <li><a href="#62-文件存储">6.2 文件存储</a>
-      <ol>
-        <li><a href="#621-将数据存储到文件中">6.2.1 将数据存储到文件中</a></li>
-        <li><a href="#622-从文件中读取数据">6.2.2 从文件中读取数据</a></li>
-      </ol>
-    </li>
-    <li><a href="#63-sharedpreferences存储">6.3 SharedPreferences存储</a>
-      <ol>
-        <li><a href="#631-将数据存储到sharedpreferences">6.3.1 将数据存储到SharedPreferences</a></li>
-        <li><a href="#632-从sharedpreferences读取数据">6.3.2 从SharedPreferences读取数据</a></li>
-        <li><a href="#633-实现记住密码功能">6.3.3 实现记住密码功能</a></li>
-      </ol>
-    </li>
-    <li><a href="#64-sqlite数据库存储">6.4 SQLite数据库存储</a>
-      <ol>
-        <li><a href="#641-创建数据库">6.4.1 创建数据库</a></li>
-        <li><a href="#642-升级数据库">6.4.2 升级数据库</a></li>
-        <li><a href="#643-添加数据">6.4.3 添加数据</a></li>
-        <li><a href="#644-更新数据">6.4.4 更新数据</a></li>
-        <li><a href="#645-删除数据">6.4.5 删除数据</a></li>
-        <li><a href="#646-查询数据">6.4.6 查询数据</a></li>
-        <li><a href="#647-使用sql操作数据库">6.4.7 使用SQL操作数据库</a></li>
-      </ol>
-    </li>
-    <li><a href="#65-使用sqlite框架操作数据库">6.5 使用SQLite框架操作数据库</a></li>
-  </ol>
-
-  <ol>
-    <li><a href="#71-contentprovider简介">7.1 ContentProvider简介</a></li>
-    <li><a href="#72-运行时权限">7.2 运行时权限</a>
-      <ol>
-        <li><a href="#721-android权限机制">7.2.1 Android权限机制</a></li>
-        <li><a href="#722-程序运行时申请权限">7.2.2 程序运行时申请权限</a></li>
-      </ol>
-    </li>
-    <li><a href="#73-访问其他程序中的数据">7.3 访问其他程序中的数据</a>
-      <ol>
-        <li><a href="#731-contentprovider基本用法">7.3.1 ContentProvider基本用法</a></li>
-        <li><a href="#732-获取系统联系人">7.3.2 获取系统联系人</a></li>
-      </ol>
-    </li>
-    <li><a href="#74-创建自定义contentprovider">7.4 创建自定义ContentProvider</a>
-      <ol>
-        <li><a href="#741-创建contentprovider的步骤">7.4.1 创建ContentProvider的步骤</a></li>
-        <li><a href="#742-实现跨程序数据共享">7.4.2 实现跨程序数据共享</a></li>
-      </ol>
-    </li>
-  </ol>
-
-  <ol>
-    <li><a href="#81-使用通知">8.1 使用通知</a>
-      <ol>
-        <li><a href="#811-通知的基本用法">8.1.1 通知的基本用法</a></li>
-        <li><a href="#812-通知的进阶技巧">8.1.2 通知的进阶技巧</a></li>
-        <li><a href="#813-通知的高级功能">8.1.3 通知的高级功能</a></li>
-      </ol>
-    </li>
-    <li><a href="#82-调用摄像头和相册">8.2 调用摄像头和相册</a>
-      <ol>
-        <li><a href="#821-调用摄像头拍照">8.2.1 调用摄像头拍照</a></li>
-        <li><a href="#822-从相册中选择图片">8.2.2 从相册中选择图片</a></li>
-      </ol>
-    </li>
-    <li><a href="#83-播放多媒体文件">8.3 播放多媒体文件</a>
-      <ol>
-        <li><a href="#831-播放音频">8.3.1 播放音频</a></li>
-        <li><a href="#832-播放视频">8.3.2 播放视频</a></li>
-      </ol>
-    </li>
-  </ol>
-
-  <ol>
-    <li><a href="#91-webview的用法">9.1 WebView的用法</a></li>
-    <li><a href="#92-使用http协议访问网络">9.2 使用HTTP协议访问网络</a>
-      <ol>
-        <li><a href="#921-使用httpurlconnection">9.2.1 使用HttpURLConnection</a></li>
-        <li><a href="#922-使用okhttp">9.2.2 使用OkHttp</a></li>
-      </ol>
-    </li>
-    <li><a href="#93-解析xml格式数据">9.3 解析XML格式数据</a>
-      <ol>
-        <li><a href="#931-pull解析方式">9.3.1 Pull解析方式</a></li>
-        <li><a href="#932-sax解析方式">9.3.2 SAX解析方式</a></li>
-      </ol>
-    </li>
-    <li><a href="#94-解析json格式数据">9.4 解析JSON格式数据</a>
-      <ol>
-        <li><a href="#941-使用jsonobject">9.4.1 使用JSONObject</a></li>
-        <li><a href="#942-使用gson">9.4.2 使用GSON</a></li>
-      </ol>
-    </li>
-    <li><a href="#95-网络编程最佳实践">9.5 网络编程最佳实践</a></li>
-  </ol>
-
-  <ol>
-    <li><a href="#101-服务是什么">10.1 服务是什么</a></li>
-    <li><a href="#102-android多线程编程">10.2 Android多线程编程</a>
-      <ol>
-        <li><a href="#1021-线程的基本用法">10.2.1 线程的基本用法</a></li>
-        <li><a href="#1022-在子线程中更新ui">10.2.2 在子线程中更新UI</a></li>
-        <li><a href="#1023-解析异步消息处理机制">10.2.3 解析异步消息处理机制</a></li>
-        <li><a href="#1024-使用asynctask">10.2.4 使用AsyncTask</a></li>
-      </ol>
-    </li>
-    <li><a href="#103-服务的基本用法">10.3 服务的基本用法</a>
-      <ol>
-        <li><a href="#1031-定义一个服务">10.3.1 定义一个服务</a></li>
-        <li><a href="#1032-启动和停止服务">10.3.2 启动和停止服务</a></li>
-        <li><a href="#1033-活动和服务进行通信">10.3.3 活动和服务进行通信</a></li>
-      </ol>
-    </li>
-    <li><a href="#104-服务的生命周期">10.4 服务的生命周期</a></li>
-    <li><a href="#105-服务的更多技巧">10.5 服务的更多技巧</a>
-      <ol>
-        <li><a href="#1051-使用前台服务">10.5.1 使用前台服务</a></li>
-        <li><a href="#1052-使用intentservice">10.5.2 使用IntentService</a></li>
-      </ol>
-    </li>
-    <li><a href="#106-服务的最佳实践-完整版的下载示例">10.6 服务的最佳实践-完整版的下载示例</a></li>
-  </ol>
-
-  <ol>
-    <li><a href="#gradle">Gradle</a></li>
-    <li><a href="#viewbinding">ViewBinding</a></li>
   </ol>
 </nav>
         </div>
@@ -1300,41 +1314,41 @@
 <div class="table-wrapper"><table>
   <thead>
       <tr>
-          <th style="text-align: left">状态</th>
-          <th style="text-align: left">位置</th>
-          <th style="text-align: left">是否可见</th>
-          <th style="text-align: left">系统回收</th>
-          <th style="text-align: left">备注</th>
+          <th>状态</th>
+          <th>位置</th>
+          <th>是否可见</th>
+          <th>系统回收</th>
+          <th>备注</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left">运行状态</td>
-          <td style="text-align: left">栈顶</td>
-          <td style="text-align: left">可见</td>
-          <td style="text-align: left">一般不回收</td>
-          <td style="text-align: left"></td>
+          <td>运行状态</td>
+          <td>栈顶</td>
+          <td>可见</td>
+          <td>一般不回收</td>
+          <td></td>
       </tr>
       <tr>
-          <td style="text-align: left">暂停状态</td>
-          <td style="text-align: left">栈中</td>
-          <td style="text-align: left">可见</td>
-          <td style="text-align: left">一般不回收</td>
-          <td style="text-align: left">活动仍然存活可见</td>
+          <td>暂停状态</td>
+          <td>栈中</td>
+          <td>可见</td>
+          <td>一般不回收</td>
+          <td>活动仍然存活可见</td>
       </tr>
       <tr>
-          <td style="text-align: left">停止状态</td>
-          <td style="text-align: left">栈中</td>
-          <td style="text-align: left">不可见</td>
-          <td style="text-align: left">可能回收</td>
-          <td style="text-align: left">保留状态和成员变量</td>
+          <td>停止状态</td>
+          <td>栈中</td>
+          <td>不可见</td>
+          <td>可能回收</td>
+          <td>保留状态和成员变量</td>
       </tr>
       <tr>
-          <td style="text-align: left">销毁状态</td>
-          <td style="text-align: left">移出栈</td>
-          <td style="text-align: left">不可见</td>
-          <td style="text-align: left">倾向回收</td>
-          <td style="text-align: left"></td>
+          <td>销毁状态</td>
+          <td>移出栈</td>
+          <td>不可见</td>
+          <td>倾向回收</td>
+          <td></td>
       </tr>
   </tbody>
 </table></div>
@@ -1343,46 +1357,46 @@
 <div class="table-wrapper"><table>
   <thead>
       <tr>
-          <th style="text-align: left">方法</th>
-          <th style="text-align: left">调用时机</th>
-          <th style="text-align: left">备注</th>
+          <th>方法</th>
+          <th>调用时机</th>
+          <th>备注</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left">onCreate()</td>
-          <td style="text-align: left">活动第一次创建时</td>
-          <td style="text-align: left">完成初始化,加载布局,绑定事件等</td>
+          <td>onCreate()</td>
+          <td>活动第一次创建时</td>
+          <td>完成初始化,加载布局,绑定事件等</td>
       </tr>
       <tr>
-          <td style="text-align: left">onStart()</td>
-          <td style="text-align: left">活动由不可见变为可见时</td>
-          <td style="text-align: left"></td>
+          <td>onStart()</td>
+          <td>活动由不可见变为可见时</td>
+          <td></td>
       </tr>
       <tr>
-          <td style="text-align: left">onResume()</td>
-          <td style="text-align: left">活动准备好和用户进行交互时</td>
-          <td style="text-align: left">此时活动必定位于栈顶且处于运行状态</td>
+          <td>onResume()</td>
+          <td>活动准备好和用户进行交互时</td>
+          <td>此时活动必定位于栈顶且处于运行状态</td>
       </tr>
       <tr>
-          <td style="text-align: left">onPause()</td>
-          <td style="text-align: left">系统准备启动或恢复另一个活动时</td>
-          <td style="text-align: left">在该方法中释放消耗CPU的资源,保存关键数据,防止影响新活动</td>
+          <td>onPause()</td>
+          <td>系统准备启动或恢复另一个活动时</td>
+          <td>在该方法中释放消耗CPU的资源,保存关键数据,防止影响新活动</td>
       </tr>
       <tr>
-          <td style="text-align: left">onStop()</td>
-          <td style="text-align: left">活动完全不可见时</td>
-          <td style="text-align: left">如果新活动是对话框式,那么onPause()会执行而onStop不会执行</td>
+          <td>onStop()</td>
+          <td>活动完全不可见时</td>
+          <td>如果新活动是对话框式,那么onPause()会执行而onStop不会执行</td>
       </tr>
       <tr>
-          <td style="text-align: left">onRestart()</td>
-          <td style="text-align: left">活动由停止变为运行前</td>
-          <td style="text-align: left">活动重新启动时</td>
+          <td>onRestart()</td>
+          <td>活动由停止变为运行前</td>
+          <td>活动重新启动时</td>
       </tr>
       <tr>
-          <td style="text-align: left">onDestory()</td>
-          <td style="text-align: left">活动被销毁前</td>
-          <td style="text-align: left">之后活动变为销毁状态</td>
+          <td>onDestory()</td>
+          <td>活动被销毁前</td>
+          <td>之后活动变为销毁状态</td>
       </tr>
   </tbody>
 </table></div>
@@ -1820,31 +1834,31 @@
 <div class="table-wrapper"><table>
   <thead>
       <tr>
-          <th style="text-align: left">Model</th>
-          <th style="text-align: left">作用</th>
-          <th style="text-align: left">备注</th>
+          <th>Model</th>
+          <th>作用</th>
+          <th>备注</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left">standard</td>
-          <td style="text-align: left">启动活动时每次都创建新的活动实例放到栈顶</td>
-          <td style="text-align: left">活动默认的启动模式</td>
+          <td>standard</td>
+          <td>启动活动时每次都创建新的活动实例放到栈顶</td>
+          <td>活动默认的启动模式</td>
       </tr>
       <tr>
-          <td style="text-align: left">signleTop</td>
-          <td style="text-align: left">检测栈顶是否存在该活动,存在直接使用,不存在则创建活动实例</td>
-          <td style="text-align: left">检测栈顶,若活动在栈顶之外也会创建新实例</td>
+          <td>signleTop</td>
+          <td>检测栈顶是否存在该活动,存在直接使用,不存在则创建活动实例</td>
+          <td>检测栈顶,若活动在栈顶之外也会创建新实例</td>
       </tr>
       <tr>
-          <td style="text-align: left">singleTask</td>
-          <td style="text-align: left">检测栈中是否存在活动实例,若存在则使用,否则创建新实例</td>
-          <td style="text-align: left">若该活动存在实例,则其之上的所有活动全部出栈</td>
+          <td>singleTask</td>
+          <td>检测栈中是否存在活动实例,若存在则使用,否则创建新实例</td>
+          <td>若该活动存在实例,则其之上的所有活动全部出栈</td>
       </tr>
       <tr>
-          <td style="text-align: left">singleInstance</td>
-          <td style="text-align: left">启用单独的返回栈管理该活动</td>
-          <td style="text-align: left">用于多程序共享该活动时,共用同一返回栈</td>
+          <td>singleInstance</td>
+          <td>启用单独的返回栈管理该活动</td>
+          <td>用于多程序共享该活动时,共用同一返回栈</td>
       </tr>
   </tbody>
 </table></div>
@@ -2142,56 +2156,56 @@
 <div class="table-wrapper"><table>
   <thead>
       <tr>
-          <th style="text-align: left">属性</th>
-          <th style="text-align: left">作用</th>
-          <th style="text-align: left">样例</th>
+          <th>属性</th>
+          <th>作用</th>
+          <th>样例</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left">android:text</td>
-          <td style="text-align: left">设置文本内容</td>
-          <td style="text-align: left">android:text=&ldquo;Hello,World!&rdquo;</td>
+          <td>android:text</td>
+          <td>设置文本内容</td>
+          <td>android:text=&ldquo;Hello,World!&rdquo;</td>
       </tr>
       <tr>
-          <td style="text-align: left">android:textSize</td>
-          <td style="text-align: left">设置文本大小</td>
-          <td style="text-align: left">android:textSize=&ldquo;18sp&rdquo;</td>
+          <td>android:textSize</td>
+          <td>设置文本大小</td>
+          <td>android:textSize=&ldquo;18sp&rdquo;</td>
       </tr>
       <tr>
-          <td style="text-align: left">android:textColor</td>
-          <td style="text-align: left">设置文本颜色</td>
-          <td style="text-align: left">android:textColor=&quot;#FF0000&quot;</td>
+          <td>android:textColor</td>
+          <td>设置文本颜色</td>
+          <td>android:textColor=&quot;#FF0000&quot;</td>
       </tr>
       <tr>
-          <td style="text-align: left">android:gravity</td>
-          <td style="text-align: left">设置文本对齐方式</td>
-          <td style="text-align: left">android:gravity=&ldquo;center&rdquo;</td>
+          <td>android:gravity</td>
+          <td>设置文本对齐方式</td>
+          <td>android:gravity=&ldquo;center&rdquo;</td>
       </tr>
       <tr>
-          <td style="text-align: left"><strong>方法</strong></td>
-          <td style="text-align: left"></td>
-          <td style="text-align: left"></td>
+          <td><strong>方法</strong></td>
+          <td></td>
+          <td></td>
       </tr>
       <tr>
-          <td style="text-align: left">setText(String text)</td>
-          <td style="text-align: left">设置文本内容</td>
-          <td style="text-align: left">textView.setText(&ldquo;Hello, World!&rdquo;);</td>
+          <td>setText(String text)</td>
+          <td>设置文本内容</td>
+          <td>textView.setText(&ldquo;Hello, World!&rdquo;);</td>
       </tr>
       <tr>
-          <td style="text-align: left">getText()</td>
-          <td style="text-align: left">获取文本内容</td>
-          <td style="text-align: left">String text = textView.getText().toString();</td>
+          <td>getText()</td>
+          <td>获取文本内容</td>
+          <td>String text = textView.getText().toString();</td>
       </tr>
       <tr>
-          <td style="text-align: left">setTextSize(float size)</td>
-          <td style="text-align: left">设置文字大小</td>
-          <td style="text-align: left">textView.setTextSize(18);</td>
+          <td>setTextSize(float size)</td>
+          <td>设置文字大小</td>
+          <td>textView.setTextSize(18);</td>
       </tr>
       <tr>
-          <td style="text-align: left">setTextColor(int color)</td>
-          <td style="text-align: left">设置文字颜色</td>
-          <td style="text-align: left">textView.setTextColor(Color.RED);</td>
+          <td>setTextColor(int color)</td>
+          <td>设置文字颜色</td>
+          <td>textView.setTextColor(Color.RED);</td>
       </tr>
   </tbody>
 </table></div>
@@ -2200,46 +2214,46 @@
 <div class="table-wrapper"><table>
   <thead>
       <tr>
-          <th style="text-align: left">属性</th>
-          <th style="text-align: left">作用</th>
-          <th style="text-align: left">样例</th>
+          <th>属性</th>
+          <th>作用</th>
+          <th>样例</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left">android:text</td>
-          <td style="text-align: left">设置Button上显示的文本内容</td>
-          <td style="text-align: left">android:text=&ldquo;Click Me&rdquo;</td>
+          <td>android:text</td>
+          <td>设置Button上显示的文本内容</td>
+          <td>android:text=&ldquo;Click Me&rdquo;</td>
       </tr>
       <tr>
-          <td style="text-align: left">android:onClick</td>
-          <td style="text-align: left">设置点击事件的处理方法，通过指定方法名来响应按钮点击事件。</td>
-          <td style="text-align: left">android:onClick=&ldquo;onClickButton&rdquo;</td>
+          <td>android:onClick</td>
+          <td>设置点击事件的处理方法，通过指定方法名来响应按钮点击事件。</td>
+          <td>android:onClick=&ldquo;onClickButton&rdquo;</td>
       </tr>
       <tr>
-          <td style="text-align: left">android:enabled</td>
-          <td style="text-align: left">设置按钮是否可用</td>
-          <td style="text-align: left">android:enabled=&ldquo;true&rdquo;</td>
+          <td>android:enabled</td>
+          <td>设置按钮是否可用</td>
+          <td>android:enabled=&ldquo;true&rdquo;</td>
       </tr>
       <tr>
-          <td style="text-align: left"><strong>方法</strong></td>
-          <td style="text-align: left"></td>
-          <td style="text-align: left"></td>
+          <td><strong>方法</strong></td>
+          <td></td>
+          <td></td>
       </tr>
       <tr>
-          <td style="text-align: left">setOnClickListener(View.OnClickListener listener)</td>
-          <td style="text-align: left">设置点击事件的监听器，用于在按钮被点击时执行相应的逻辑。</td>
-          <td style="text-align: left">button.setOnClickListener(new View.OnClickListener() {<br/>    @Override<br/>    public void onClick(View v) {<br/>        // 按钮被点击时的处理逻辑<br/>    }<br/>});</td>
+          <td>setOnClickListener(View.OnClickListener listener)</td>
+          <td>设置点击事件的监听器，用于在按钮被点击时执行相应的逻辑。</td>
+          <td>button.setOnClickListener(new View.OnClickListener() {<br/>    @Override<br/>    public void onClick(View v) {<br/>        // 按钮被点击时的处理逻辑<br/>    }<br/>});</td>
       </tr>
       <tr>
-          <td style="text-align: left">setText(String text)</td>
-          <td style="text-align: left">设置按钮上显示的文本内容。</td>
-          <td style="text-align: left">button.setText(&ldquo;Click Me&rdquo;);</td>
+          <td>setText(String text)</td>
+          <td>设置按钮上显示的文本内容。</td>
+          <td>button.setText(&ldquo;Click Me&rdquo;);</td>
       </tr>
       <tr>
-          <td style="text-align: left">setEnabled(boolean enabled)</td>
-          <td style="text-align: left">设置按钮是否可用</td>
-          <td style="text-align: left">button.setEnabled(true);</td>
+          <td>setEnabled(boolean enabled)</td>
+          <td>设置按钮是否可用</td>
+          <td>button.setEnabled(true);</td>
       </tr>
   </tbody>
 </table></div>
@@ -2248,56 +2262,56 @@
 <div class="table-wrapper"><table>
   <thead>
       <tr>
-          <th style="text-align: left">属性</th>
-          <th style="text-align: left">作用</th>
-          <th style="text-align: left">样例</th>
+          <th>属性</th>
+          <th>作用</th>
+          <th>样例</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left">android:hint</td>
-          <td style="text-align: left">设置提示文本</td>
-          <td style="text-align: left">android:hint=&ldquo;请输入用户名&rdquo;</td>
+          <td>android:hint</td>
+          <td>设置提示文本</td>
+          <td>android:hint=&ldquo;请输入用户名&rdquo;</td>
       </tr>
       <tr>
-          <td style="text-align: left">android:inputType</td>
-          <td style="text-align: left">设置期望的输入类型,如文本、数字、日期</td>
-          <td style="text-align: left">android:inputType=&ldquo;text&rdquo;</td>
+          <td>android:inputType</td>
+          <td>设置期望的输入类型,如文本、数字、日期</td>
+          <td>android:inputType=&ldquo;text&rdquo;</td>
       </tr>
       <tr>
-          <td style="text-align: left">android:maxLines</td>
-          <td style="text-align: left">设置最大行数</td>
-          <td style="text-align: left">android:maxLines=&ldquo;3&rdquo;</td>
+          <td>android:maxLines</td>
+          <td>设置最大行数</td>
+          <td>android:maxLines=&ldquo;3&rdquo;</td>
       </tr>
       <tr>
-          <td style="text-align: left">android:maxLength</td>
-          <td style="text-align: left">设置最大字符数</td>
-          <td style="text-align: left">android:maxLength=&ldquo;10&rdquo;</td>
+          <td>android:maxLength</td>
+          <td>设置最大字符数</td>
+          <td>android:maxLength=&ldquo;10&rdquo;</td>
       </tr>
       <tr>
-          <td style="text-align: left"><strong>方法</strong></td>
-          <td style="text-align: left"></td>
-          <td style="text-align: left"></td>
+          <td><strong>方法</strong></td>
+          <td></td>
+          <td></td>
       </tr>
       <tr>
-          <td style="text-align: left">getText()</td>
-          <td style="text-align: left">获取文本内容</td>
-          <td style="text-align: left">String text = editText.getText().toString();</td>
+          <td>getText()</td>
+          <td>获取文本内容</td>
+          <td>String text = editText.getText().toString();</td>
       </tr>
       <tr>
-          <td style="text-align: left">setText(String text)</td>
-          <td style="text-align: left">设置文本内容</td>
-          <td style="text-align: left">editText.setText(&ldquo;Hello, World!&rdquo;);</td>
+          <td>setText(String text)</td>
+          <td>设置文本内容</td>
+          <td>editText.setText(&ldquo;Hello, World!&rdquo;);</td>
       </tr>
       <tr>
-          <td style="text-align: left">setSelection(int index)</td>
-          <td style="text-align: left">设置文本的选中范围</td>
-          <td style="text-align: left">editText.setSelection(2, 5); // 选中第2到第5个字符</td>
+          <td>setSelection(int index)</td>
+          <td>设置文本的选中范围</td>
+          <td>editText.setSelection(2, 5); // 选中第2到第5个字符</td>
       </tr>
       <tr>
-          <td style="text-align: left">addTextChangedListener(TextWatcher watcher)</td>
-          <td style="text-align: left">添加文本变化监听器,监听EditText中文本的变化</td>
-          <td style="text-align: left">editText.addTextChangedListener(new TextWatcher() {<br/>    @Override<br/>    public void beforeTextChanged(CharSequence s, int start, int count, int after) {<br/>        // 文本变化前的处理逻辑<br/>    }<br/><br/>    @Override<br/>    public void onTextChanged(CharSequence s, int start, int before, int count) {<br/>        // 文本变化时的处理逻辑<br/>    }<br/><br/>    @Override<br/>    public void afterTextChanged(Editable s) {<br/>        // 文本变化后的处理逻辑<br/>    }<br/>});</td>
+          <td>addTextChangedListener(TextWatcher watcher)</td>
+          <td>添加文本变化监听器,监听EditText中文本的变化</td>
+          <td>editText.addTextChangedListener(new TextWatcher() {<br/>    @Override<br/>    public void beforeTextChanged(CharSequence s, int start, int count, int after) {<br/>        // 文本变化前的处理逻辑<br/>    }<br/><br/>    @Override<br/>    public void onTextChanged(CharSequence s, int start, int before, int count) {<br/>        // 文本变化时的处理逻辑<br/>    }<br/><br/>    @Override<br/>    public void afterTextChanged(Editable s) {<br/>        // 文本变化后的处理逻辑<br/>    }<br/>});</td>
       </tr>
   </tbody>
 </table></div>
@@ -2311,46 +2325,46 @@
 <div class="table-wrapper"><table>
   <thead>
       <tr>
-          <th style="text-align: left">属性</th>
-          <th style="text-align: left">作用</th>
-          <th style="text-align: left">样例</th>
+          <th>属性</th>
+          <th>作用</th>
+          <th>样例</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left">android:src</td>
-          <td style="text-align: left">设置显示的图像</td>
-          <td style="text-align: left">android:src=&quot;@drawable/image&quot;</td>
+          <td>android:src</td>
+          <td>设置显示的图像</td>
+          <td>android:src=&quot;@drawable/image&quot;</td>
       </tr>
       <tr>
-          <td style="text-align: left">android:scaleType</td>
-          <td style="text-align: left">设置图像缩放类型</td>
-          <td style="text-align: left">android:scaleType=&ldquo;centerCrop&rdquo;</td>
+          <td>android:scaleType</td>
+          <td>设置图像缩放类型</td>
+          <td>android:scaleType=&ldquo;centerCrop&rdquo;</td>
       </tr>
       <tr>
-          <td style="text-align: left">android:adjustViewBounds</td>
-          <td style="text-align: left">设置是否根据图像的宽高比调整边界</td>
-          <td style="text-align: left">android:adjustViewBounds=&ldquo;true&rdquo;</td>
+          <td>android:adjustViewBounds</td>
+          <td>设置是否根据图像的宽高比调整边界</td>
+          <td>android:adjustViewBounds=&ldquo;true&rdquo;</td>
       </tr>
       <tr>
-          <td style="text-align: left"><strong>方法</strong></td>
-          <td style="text-align: left"></td>
-          <td style="text-align: left"></td>
+          <td><strong>方法</strong></td>
+          <td></td>
+          <td></td>
       </tr>
       <tr>
-          <td style="text-align: left">setImageResource(int resId)</td>
-          <td style="text-align: left">设置显示的图像</td>
-          <td style="text-align: left">imageView.setImageResource(R.drawable.image);</td>
+          <td>setImageResource(int resId)</td>
+          <td>设置显示的图像</td>
+          <td>imageView.setImageResource(R.drawable.image);</td>
       </tr>
       <tr>
-          <td style="text-align: left">setScaleType(ImageView.ScaleType scaleType)</td>
-          <td style="text-align: left">设置图像缩放类型</td>
-          <td style="text-align: left">imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);</td>
+          <td>setScaleType(ImageView.ScaleType scaleType)</td>
+          <td>设置图像缩放类型</td>
+          <td>imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);</td>
       </tr>
       <tr>
-          <td style="text-align: left">setAdjustViewBounds(boolean adjust)</td>
-          <td style="text-align: left">设置是否根据图像的宽高比调整边界</td>
-          <td style="text-align: left">imageView.setAdjustViewBounds(true);</td>
+          <td>setAdjustViewBounds(boolean adjust)</td>
+          <td>设置是否根据图像的宽高比调整边界</td>
+          <td>imageView.setAdjustViewBounds(true);</td>
       </tr>
   </tbody>
 </table></div>
@@ -2393,51 +2407,51 @@
 </div><div class="table-wrapper"><table>
   <thead>
       <tr>
-          <th style="text-align: left">方法</th>
-          <th style="text-align: left">作用</th>
-          <th style="text-align: left">样例</th>
+          <th>方法</th>
+          <th>作用</th>
+          <th>样例</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left">setTitle(CharSequence title)</td>
-          <td style="text-align: left">设置对话框的标题</td>
-          <td style="text-align: left">builder.setTitle(&ldquo;AlertDialog Title&rdquo;);</td>
+          <td>setTitle(CharSequence title)</td>
+          <td>设置对话框的标题</td>
+          <td>builder.setTitle(&ldquo;AlertDialog Title&rdquo;);</td>
       </tr>
       <tr>
-          <td style="text-align: left">setMessage(CharSequence message)</td>
-          <td style="text-align: left">设置对话框的消息内容</td>
-          <td style="text-align: left">builder.setMessage(&ldquo;AlertDialog Message&rdquo;);</td>
+          <td>setMessage(CharSequence message)</td>
+          <td>设置对话框的消息内容</td>
+          <td>builder.setMessage(&ldquo;AlertDialog Message&rdquo;);</td>
       </tr>
       <tr>
-          <td style="text-align: left">setPositiveButton(CharSequence text, DialogInterface.OnClickListener listener)</td>
-          <td style="text-align: left">设置对话框的积极按钮（通常表示确定或确认）</td>
-          <td style="text-align: left">builder.setPositiveButton(&ldquo;OK&rdquo;, new DialogInterface.OnClickListener() {<br/>    @Override<br/>    public void onClick(DialogInterface dialog, int which) {<br/>        // 点击积极按钮时的处理逻辑<br/>    }<br/>});</td>
+          <td>setPositiveButton(CharSequence text, DialogInterface.OnClickListener listener)</td>
+          <td>设置对话框的积极按钮（通常表示确定或确认）</td>
+          <td>builder.setPositiveButton(&ldquo;OK&rdquo;, new DialogInterface.OnClickListener() {<br/>    @Override<br/>    public void onClick(DialogInterface dialog, int which) {<br/>        // 点击积极按钮时的处理逻辑<br/>    }<br/>});</td>
       </tr>
       <tr>
-          <td style="text-align: left">setNegativeButton(CharSequence text, DialogInterface.OnClickListener listener)</td>
-          <td style="text-align: left">设置对话框的消极按钮（通常表示取消或拒绝）</td>
-          <td style="text-align: left">builder.setNegativeButton(&ldquo;Cancel&rdquo;, new DialogInterface.OnClickListener() {<br/>    @Override<br/>    public void onClick(DialogInterface dialog, int which) {<br/>        // 点击消极按钮时的处理逻辑<br/>    }<br/>});</td>
+          <td>setNegativeButton(CharSequence text, DialogInterface.OnClickListener listener)</td>
+          <td>设置对话框的消极按钮（通常表示取消或拒绝）</td>
+          <td>builder.setNegativeButton(&ldquo;Cancel&rdquo;, new DialogInterface.OnClickListener() {<br/>    @Override<br/>    public void onClick(DialogInterface dialog, int which) {<br/>        // 点击消极按钮时的处理逻辑<br/>    }<br/>});</td>
       </tr>
       <tr>
-          <td style="text-align: left">setNeutralButton(CharSequence text, DialogInterface.OnClickListener listener)</td>
-          <td style="text-align: left">设置对话框的中立按钮（通常表示中间选项）</td>
-          <td style="text-align: left">builder.setNeutralButton(&ldquo;Skip&rdquo;, new DialogInterface.OnClickListener() {<br/>    @Override<br/>    public void onClick(DialogInterface dialog, int which) {<br/>        // 点击中立按钮时的处理逻辑<br/>    }<br/>});</td>
+          <td>setNeutralButton(CharSequence text, DialogInterface.OnClickListener listener)</td>
+          <td>设置对话框的中立按钮（通常表示中间选项）</td>
+          <td>builder.setNeutralButton(&ldquo;Skip&rdquo;, new DialogInterface.OnClickListener() {<br/>    @Override<br/>    public void onClick(DialogInterface dialog, int which) {<br/>        // 点击中立按钮时的处理逻辑<br/>    }<br/>});</td>
       </tr>
       <tr>
-          <td style="text-align: left">setCancelable(boolean cancelable)</td>
-          <td style="text-align: left">设置对话框是否可以被取消</td>
-          <td style="text-align: left">builder.setCancelable(true); // 对话框可以被取消<br />如果为true 那么点击dialog框外或者点击物理返回键都会取消对话框如果为false <br />那么必须点击对话框的按钮才能关闭对话框,点击框外或者点击返回键都无法取消</td>
+          <td>setCancelable(boolean cancelable)</td>
+          <td>设置对话框是否可以被取消</td>
+          <td>builder.setCancelable(true); // 对话框可以被取消<br />如果为true 那么点击dialog框外或者点击物理返回键都会取消对话框如果为false <br />那么必须点击对话框的按钮才能关闭对话框,点击框外或者点击返回键都无法取消</td>
       </tr>
       <tr>
-          <td style="text-align: left">create()</td>
-          <td style="text-align: left">创建AlertDialog对象</td>
-          <td style="text-align: left">AlertDialog alertDialog = builder.create();</td>
+          <td>create()</td>
+          <td>创建AlertDialog对象</td>
+          <td>AlertDialog alertDialog = builder.create();</td>
       </tr>
       <tr>
-          <td style="text-align: left">show()</td>
-          <td style="text-align: left">显示对话框</td>
-          <td style="text-align: left">AlertDialog alertDialog = builder.create();<br/>alertDialog.show();</td>
+          <td>show()</td>
+          <td>显示对话框</td>
+          <td>AlertDialog alertDialog = builder.create();<br/>alertDialog.show();</td>
       </tr>
   </tbody>
 </table></div>
@@ -2619,30 +2633,30 @@
 </h3><div class="table-wrapper"><table>
   <thead>
       <tr>
-          <th style="text-align: left">属性</th>
-          <th style="text-align: left">作用</th>
-          <th style="text-align: left">示例</th>
-          <th style="text-align: left">备注</th>
+          <th>属性</th>
+          <th>作用</th>
+          <th>示例</th>
+          <th>备注</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left">android:orientation</td>
-          <td style="text-align: left">指定布局排列方向</td>
-          <td style="text-align: left">android:orientation=&ldquo;horizontal&rdquo; (vertical)</td>
-          <td style="text-align: left"></td>
+          <td>android:orientation</td>
+          <td>指定布局排列方向</td>
+          <td>android:orientation=&ldquo;horizontal&rdquo; (vertical)</td>
+          <td></td>
       </tr>
       <tr>
-          <td style="text-align: left">android:layout_gravity</td>
-          <td style="text-align: left">指定控件对齐方式</td>
-          <td style="text-align: left">android:layout_gravity=&ldquo;top&rdquo; (center_vertical bottom)</td>
-          <td style="text-align: left">layout_gravity有效方向和orientation垂直,该属性作用于控件</td>
+          <td>android:layout_gravity</td>
+          <td>指定控件对齐方式</td>
+          <td>android:layout_gravity=&ldquo;top&rdquo; (center_vertical bottom)</td>
+          <td>layout_gravity有效方向和orientation垂直,该属性作用于控件</td>
       </tr>
       <tr>
-          <td style="text-align: left">android:layout_weight</td>
-          <td style="text-align: left">按比例指定控件大小</td>
-          <td style="text-align: left">android:layout_weight=&ldquo;1&rdquo;</td>
-          <td style="text-align: left">该属性作用于控件</td>
+          <td>android:layout_weight</td>
+          <td>按比例指定控件大小</td>
+          <td>android:layout_weight=&ldquo;1&rdquo;</td>
+          <td>该属性作用于控件</td>
       </tr>
   </tbody>
 </table></div>
@@ -2668,61 +2682,61 @@
 </h3><div class="table-wrapper"><table>
   <thead>
       <tr>
-          <th style="text-align: left">属性</th>
-          <th style="text-align: left">作用</th>
-          <th style="text-align: left">示例</th>
+          <th>属性</th>
+          <th>作用</th>
+          <th>示例</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left">android:layout_alignParentTop</td>
-          <td style="text-align: left">相对父布局定位</td>
-          <td style="text-align: left">android:layout_alignParentTop=&ldquo;true&rdquo;</td>
+          <td>android:layout_alignParentTop</td>
+          <td>相对父布局定位</td>
+          <td>android:layout_alignParentTop=&ldquo;true&rdquo;</td>
       </tr>
       <tr>
-          <td style="text-align: left">android:layout_alignParentBottom</td>
-          <td style="text-align: left"></td>
-          <td style="text-align: left"></td>
+          <td>android:layout_alignParentBottom</td>
+          <td></td>
+          <td></td>
       </tr>
       <tr>
-          <td style="text-align: left">android:layout_alignParentLeft</td>
-          <td style="text-align: left"></td>
-          <td style="text-align: left"></td>
+          <td>android:layout_alignParentLeft</td>
+          <td></td>
+          <td></td>
       </tr>
       <tr>
-          <td style="text-align: left">android:layout_alignParentRight</td>
-          <td style="text-align: left"></td>
-          <td style="text-align: left"></td>
+          <td>android:layout_alignParentRight</td>
+          <td></td>
+          <td></td>
       </tr>
       <tr>
-          <td style="text-align: left">android:layout_centerInParent</td>
-          <td style="text-align: left"></td>
-          <td style="text-align: left"></td>
+          <td>android:layout_centerInParent</td>
+          <td></td>
+          <td></td>
       </tr>
       <tr>
-          <td style="text-align: left"></td>
-          <td style="text-align: left"></td>
-          <td style="text-align: left"></td>
+          <td></td>
+          <td></td>
+          <td></td>
       </tr>
       <tr>
-          <td style="text-align: left">android:layout_above</td>
-          <td style="text-align: left">相对其他组件定位</td>
-          <td style="text-align: left"></td>
+          <td>android:layout_above</td>
+          <td>相对其他组件定位</td>
+          <td></td>
       </tr>
       <tr>
-          <td style="text-align: left">android:layout_below</td>
-          <td style="text-align: left"></td>
-          <td style="text-align: left"></td>
+          <td>android:layout_below</td>
+          <td></td>
+          <td></td>
       </tr>
       <tr>
-          <td style="text-align: left">android:layout_toLeftOf</td>
-          <td style="text-align: left"></td>
-          <td style="text-align: left"></td>
+          <td>android:layout_toLeftOf</td>
+          <td></td>
+          <td></td>
       </tr>
       <tr>
-          <td style="text-align: left">android:layout_toRightOf</td>
-          <td style="text-align: left"></td>
-          <td style="text-align: left"></td>
+          <td>android:layout_toRightOf</td>
+          <td></td>
+          <td></td>
       </tr>
   </tbody>
 </table></div>
@@ -2788,21 +2802,21 @@
 <div class="table-wrapper"><table>
   <thead>
       <tr>
-          <th style="text-align: left">属性</th>
-          <th style="text-align: left">作用</th>
-          <th style="text-align: left">示例</th>
+          <th>属性</th>
+          <th>作用</th>
+          <th>示例</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left">app:layout_widthPercent</td>
-          <td style="text-align: left">指定相对于父布局的百分比宽度</td>
-          <td style="text-align: left"></td>
+          <td>app:layout_widthPercent</td>
+          <td>指定相对于父布局的百分比宽度</td>
+          <td></td>
       </tr>
       <tr>
-          <td style="text-align: left">app:layout_heightPercent</td>
-          <td style="text-align: left">制定高度</td>
-          <td style="text-align: left"></td>
+          <td>app:layout_heightPercent</td>
+          <td>制定高度</td>
+          <td></td>
       </tr>
   </tbody>
 </table></div>
@@ -8186,41 +8200,41 @@
 <div class="table-wrapper"><table>
   <thead>
       <tr>
-          <th style="text-align: left">方法</th>
-          <th style="text-align: left">作用</th>
-          <th style="text-align: left">备注</th>
+          <th>方法</th>
+          <th>作用</th>
+          <th>备注</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left">onCreate()</td>
-          <td style="text-align: left">初始化内容提供器时调用, 通常在这里完成对数据库的创建和升级等操作</td>
-          <td style="text-align: left">返回true表示内容提供器初始化成功，返回false则表示失败</td>
+          <td>onCreate()</td>
+          <td>初始化内容提供器时调用, 通常在这里完成对数据库的创建和升级等操作</td>
+          <td>返回true表示内容提供器初始化成功，返回false则表示失败</td>
       </tr>
       <tr>
-          <td style="text-align: left">query()</td>
-          <td style="text-align: left">从内容提供器中查询数据,查询的结果存放在Cursor对象中返回</td>
-          <td style="text-align: left">uri确定查询哪张表，projection确定查询哪些列，selection和selectionArgs用于约束查询哪些行，sortOrder用于对结果排序</td>
+          <td>query()</td>
+          <td>从内容提供器中查询数据,查询的结果存放在Cursor对象中返回</td>
+          <td>uri确定查询哪张表，projection确定查询哪些列，selection和selectionArgs用于约束查询哪些行，sortOrder用于对结果排序</td>
       </tr>
       <tr>
-          <td style="text-align: left">insert()</td>
-          <td style="text-align: left">向内容提供器中添加一条数据,返回一个用于表示这条新记录的URI</td>
-          <td style="text-align: left">使用uri参数确定要添加到的表，待添加的数据保存在values参数中</td>
+          <td>insert()</td>
+          <td>向内容提供器中添加一条数据,返回一个用于表示这条新记录的URI</td>
+          <td>使用uri参数确定要添加到的表，待添加的数据保存在values参数中</td>
       </tr>
       <tr>
-          <td style="text-align: left">update()</td>
-          <td style="text-align: left">更新内容提供器中已有的数据,返回受影响的行数</td>
-          <td style="text-align: left">使用uri参数来确定更新哪一张表中的数据，新数据保存在values参数中，selection和selectionArgs参数用于约束更新哪些行</td>
+          <td>update()</td>
+          <td>更新内容提供器中已有的数据,返回受影响的行数</td>
+          <td>使用uri参数来确定更新哪一张表中的数据，新数据保存在values参数中，selection和selectionArgs参数用于约束更新哪些行</td>
       </tr>
       <tr>
-          <td style="text-align: left">delete()</td>
-          <td style="text-align: left">从内容提供器中删除数据,返回被删除的行数</td>
-          <td style="text-align: left">使用uri参数来确定删除哪一张表中的数据，selection和selectionArgs参数用于约束删除哪些行</td>
+          <td>delete()</td>
+          <td>从内容提供器中删除数据,返回被删除的行数</td>
+          <td>使用uri参数来确定删除哪一张表中的数据，selection和selectionArgs参数用于约束删除哪些行</td>
       </tr>
       <tr>
-          <td style="text-align: left">getType()</td>
-          <td style="text-align: left">根据传入的内容URI来返回相应的MIME类型</td>
-          <td style="text-align: left"></td>
+          <td>getType()</td>
+          <td>根据传入的内容URI来返回相应的MIME类型</td>
+          <td></td>
       </tr>
   </tbody>
 </table></div>

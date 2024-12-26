@@ -2,18 +2,18 @@
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="前言 近期冲浪刷到大佬博客ELF文件格式, 心血来潮\n网上有不少ELF文件结构相关的文章,但大都介绍原理,具体的代码实现并不多(或许是因为有开源代码)\n">
-<title>ELF文件结构</title>
+<title>ELF文件结构浅析-解析器和加载器实现</title>
 
-<link rel='canonical' href='https://example.com/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/'>
+<link rel='canonical' href='https://example.com/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/'>
 
-<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="ELF文件结构">
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="ELF文件结构浅析-解析器和加载器实现">
 <meta property='og:description' content="前言 近期冲浪刷到大佬博客ELF文件格式, 心血来潮\n网上有不少ELF文件结构相关的文章,但大都介绍原理,具体的代码实现并不多(或许是因为有开源代码)\n">
-<meta property='og:url' content='https://example.com/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/'>
+<meta property='og:url' content='https://example.com/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/'>
 <meta property='og:site_name' content='OrientalGlass'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-11-24T16:56:01&#43;08:00'/><meta property='article:modified_time' content='2024-11-24T16:56:01&#43;08:00'/><meta property='og:image' content='https://example.com/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/1-%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F.png' />
-<meta name="twitter:title" content="ELF文件结构">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2024-11-24T16:56:01&#43;08:00'/><meta property='article:modified_time' content='2024-11-24T16:56:01&#43;08:00'/><meta property='og:image' content='https://example.com/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/1-%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F.png' />
+<meta name="twitter:title" content="ELF文件结构浅析-解析器和加载器实现">
 <meta name="twitter:description" content="前言 近期冲浪刷到大佬博客ELF文件格式, 心血来潮\n网上有不少ELF文件结构相关的文章,但大都介绍原理,具体的代码实现并不多(或许是因为有开源代码)\n"><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='https://example.com/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/1-%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F.png' />
+    <meta name="twitter:image" content='https://example.com/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/1-%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F.png' />
     <link rel="shortcut icon" href="/favicon.jpg" />
 
     </head>
@@ -413,13 +413,13 @@
     <article class="has-image main-article">
     <header class="article-header">
         <div class="article-image">
-            <a href="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/">
-                <img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/1-%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F_hu10493732426460619883.png"
-                        srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/1-%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F_hu10493732426460619883.png 800w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/1-%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F_hu7169114083300538815.png 1600w"
+            <a href="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/">
+                <img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/1-%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F_hu10493732426460619883.png"
+                        srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/1-%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F_hu10493732426460619883.png 800w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/1-%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F_hu7169114083300538815.png 1600w"
                         width="800" 
                         height="756" 
                         loading="lazy"
-                        alt="Featured image of post ELF文件结构" />
+                        alt="Featured image of post ELF文件结构浅析-解析器和加载器实现" />
                 
             </a>
         </div>
@@ -438,7 +438,7 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/">ELF文件结构</a>
+            <a href="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/">ELF文件结构浅析-解析器和加载器实现</a>
         </h2>
     
         
@@ -518,10 +518,10 @@
 <p>在OBJ文件中,段是可选的,在可执行文件中,节是可选的,但NDK编译的ELF文件同时有段和节</p>
 </li>
 </ul>
-<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/1-%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F.png"
+<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/1-%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F.png"
 	width="471"
 	height="445"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/1-%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F_hu11578961499647612510.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/1-%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F_hu4797776761866832620.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/1-%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F_hu11578961499647612510.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/1-%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F_hu4797776761866832620.png 1024w"
 	loading="lazy"
 	
 	
@@ -846,10 +846,10 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>可以使用readelf查看</p>
-<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/2-ELFHeader.png"
+<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/2-ELFHeader.png"
 	width="645"
 	height="364"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/2-ELFHeader_hu7217962532309400256.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/2-ELFHeader_hu8300044359323544144.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/2-ELFHeader_hu7217962532309400256.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/2-ELFHeader_hu8300044359323544144.png 1024w"
 	loading="lazy"
 	
 	
@@ -860,10 +860,10 @@
 ></p>
 <h2 id="e_ident">e_ident
 </h2><p>16字节ELF标识,前4字节是ELF文件标识&quot;\x7fELF&quot;,不可修改</p>
-<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/3-e_ident.png"
+<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/3-e_ident.png"
 	width="397"
 	height="487"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/3-e_ident_hu4593767979670074154.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/3-e_ident_hu17016188418119991795.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/3-e_ident_hu4593767979670074154.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/3-e_ident_hu17016188418119991795.png 1024w"
 	loading="lazy"
 	
 	
@@ -873,10 +873,10 @@
 	
 ></p>
 <p>010editor中解析如下</p>
-<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/4-e_ident-010editor.png"
+<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/4-e_ident-010editor.png"
 	width="555"
 	height="502"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/4-e_ident-010editor_hu3750704995440565832.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/4-e_ident-010editor_hu9975077787827478309.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/4-e_ident-010editor_hu3750704995440565832.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/4-e_ident-010editor_hu9975077787827478309.png 1024w"
 	loading="lazy"
 	
 		alt="4-e_ident-010editor"
@@ -893,10 +893,10 @@
 <p>该字节指明了文件类型</p>
 <p>Android系统不检查该字节,通过判断指令集v7a/v8a确定是32或64位</p>
 <p>IDA检查该字节,如果修改了这个字节,IDA就无法反汇编</p>
-<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/5-EI_CLASS.png"
+<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/5-EI_CLASS.png"
 	width="387"
 	height="196"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/5-EI_CLASS_hu15420998337605784252.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/5-EI_CLASS_hu11755541469166080534.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/5-EI_CLASS_hu15420998337605784252.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/5-EI_CLASS_hu11755541469166080534.png 1024w"
 	loading="lazy"
 	
 	
@@ -910,10 +910,10 @@
 <p>e_ident[EI_DATA]</p>
 <p>该字节指明了目标文件的数据编码格式(大小端序)</p>
 <p>Android不检查该字节,默认小端序; IDA检查该字节,如果修改该字节则IDA无法正确反汇编</p>
-<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/6-EI_DATA.png"
+<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/6-EI_DATA.png"
 	width="426"
 	height="200"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/6-EI_DATA_hu6213052239774881187.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/6-EI_DATA_hu185590510607600937.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/6-EI_DATA_hu6213052239774881187.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/6-EI_DATA_hu185590510607600937.png 1024w"
 	loading="lazy"
 	
 	
@@ -931,10 +931,10 @@
 <h2 id="e_type">e_type
 </h2><p>2字节,表明目标文件属于哪种类型</p>
 <p>Android5.0后,可执行文件全部为so,这个标志只能为03不可修改</p>
-<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/7-e_type.png"
+<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/7-e_type.png"
 	width="534"
 	height="395"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/7-e_type_hu1456249638041789670.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/7-e_type_hu7160142502159874591.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/7-e_type_hu1456249638041789670.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/7-e_type_hu7160142502159874591.png 1024w"
 	loading="lazy"
 	
 	
@@ -1097,10 +1097,10 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>打印效果如下</p>
-<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/8-ElfHeader-printElfHeader.png"
+<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/8-ElfHeader-printElfHeader.png"
 	width="536"
 	height="410"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/8-ElfHeader-printElfHeader_hu3333235702766097645.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/8-ElfHeader-printElfHeader_hu17190765734230728343.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/8-ElfHeader-printElfHeader_hu3333235702766097645.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/8-ElfHeader-printElfHeader_hu17190765734230728343.png 1024w"
 	loading="lazy"
 	
 	
@@ -1174,10 +1174,10 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>readelf查看节表</p>
-<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/9-SectionHeaderTable.png"
+<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/9-SectionHeaderTable.png"
 	width="665"
 	height="668"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/9-SectionHeaderTable_hu10886988617036425094.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/9-SectionHeaderTable_hu4267168836546879802.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/9-SectionHeaderTable_hu10886988617036425094.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/9-SectionHeaderTable_hu4267168836546879802.png 1024w"
 	loading="lazy"
 	
 	
@@ -1300,10 +1300,10 @@
 </div>
 </div><h2 id="sh_flags">sh_flags
 </h2><p>4字节,由一系列标志bit位组成</p>
-<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/10-sh_flags.png"
+<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/10-sh_flags.png"
 	width="448"
 	height="231"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/10-sh_flags_hu15225859131416561380.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/10-sh_flags_hu10638568662381386239.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/10-sh_flags_hu15225859131416561380.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/10-sh_flags_hu10638568662381386239.png 1024w"
 	loading="lazy"
 	
 	
@@ -1338,10 +1338,10 @@
 <h2 id="sh_info">sh_info
 </h2><p>4字节,节的附加信息</p>
 <p>根据节类型不同,sh_info和sh_link有不同的含义</p>
-<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/11-sh_link%E5%92%8Csh_info.png"
+<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/11-sh_link%E5%92%8Csh_info.png"
 	width="746"
 	height="389"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/11-sh_link%E5%92%8Csh_info_hu1619688956678908358.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/11-sh_link%E5%92%8Csh_info_hu8331552406855918856.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/11-sh_link%E5%92%8Csh_info_hu1619688956678908358.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/11-sh_link%E5%92%8Csh_info_hu8331552406855918856.png 1024w"
 	loading="lazy"
 	
 	
@@ -1500,10 +1500,10 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>打印结果如下</p>
-<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/12-SectionHeader-printSectionHeader.png"
+<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/12-SectionHeader-printSectionHeader.png"
 	width="1230"
 	height="801"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/12-SectionHeader-printSectionHeader_hu12249046209300380052.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/12-SectionHeader-printSectionHeader_hu11306966456103920103.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/12-SectionHeader-printSectionHeader_hu12249046209300380052.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/12-SectionHeader-printSectionHeader_hu11306966456103920103.png 1024w"
 	loading="lazy"
 	
 	
@@ -1828,10 +1828,10 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>打印结果如下</p>
-<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/13-ProgramHeader-printProgramHeader.png"
+<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/13-ProgramHeader-printProgramHeader.png"
 	width="1105"
 	height="674"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/13-ProgramHeader-printProgramHeader_hu9688126786573827173.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/13-ProgramHeader-printProgramHeader_hu945763891766458736.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/13-ProgramHeader-printProgramHeader_hu9688126786573827173.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/13-ProgramHeader-printProgramHeader_hu945763891766458736.png 1024w"
 	loading="lazy"
 	
 	
@@ -2017,10 +2017,10 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/14-StringTable-printStringTable.png"
+</div><p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/14-StringTable-printStringTable.png"
 	width="474"
 	height="651"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/14-StringTable-printStringTable_hu8725479288239151998.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/14-StringTable-printStringTable_hu6180784063121629040.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/14-StringTable-printStringTable_hu8725479288239151998.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/14-StringTable-printStringTable_hu6180784063121629040.png 1024w"
 	loading="lazy"
 	
 	
@@ -2395,10 +2395,10 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/15-SymbolTable-printSymbolTable.png"
+</div><p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/15-SymbolTable-printSymbolTable.png"
 	width="1244"
 	height="796"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/15-SymbolTable-printSymbolTable_hu1721049319162005185.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/15-SymbolTable-printSymbolTable_hu10071297087557004323.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/15-SymbolTable-printSymbolTable_hu1721049319162005185.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/15-SymbolTable-printSymbolTable_hu10071297087557004323.png 1024w"
 	loading="lazy"
 	
 	
@@ -2544,10 +2544,10 @@
 </ol>
 <h2 id="重定位类型">重定位类型
 </h2><p>重定位项用于描述如何修改以下的指令和数据域(被重定位域)</p>
-<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/16-%E8%A2%AB%E9%87%8D%E5%AE%9A%E4%BD%8D%E5%9F%9F.png"
+<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/16-%E8%A2%AB%E9%87%8D%E5%AE%9A%E4%BD%8D%E5%9F%9F.png"
 	width="788"
 	height="167"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/16-%E8%A2%AB%E9%87%8D%E5%AE%9A%E4%BD%8D%E5%9F%9F_hu1477302992022258870.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/16-%E8%A2%AB%E9%87%8D%E5%AE%9A%E4%BD%8D%E5%9F%9F_hu5396829156806860766.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/16-%E8%A2%AB%E9%87%8D%E5%AE%9A%E4%BD%8D%E5%9F%9F_hu1477302992022258870.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/16-%E8%A2%AB%E9%87%8D%E5%AE%9A%E4%BD%8D%E5%9F%9F_hu5396829156806860766.png 1024w"
 	loading="lazy"
 	
 	
@@ -2557,10 +2557,10 @@
 	
 ></p>
 <p>定义以下几种运算符号便于描述</p>
-<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/17-%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%BF%90%E7%AE%97%E7%AC%A6%E5%8F%B7.png"
+<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/17-%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%BF%90%E7%AE%97%E7%AC%A6%E5%8F%B7.png"
 	width="749"
 	height="729"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/17-%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%BF%90%E7%AE%97%E7%AC%A6%E5%8F%B7_hu5408481700059809622.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/17-%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%BF%90%E7%AE%97%E7%AC%A6%E5%8F%B7_hu10365973891696206193.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/17-%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%BF%90%E7%AE%97%E7%AC%A6%E5%8F%B7_hu5408481700059809622.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/17-%E9%87%8D%E5%AE%9A%E4%BD%8D%E8%BF%90%E7%AE%97%E7%AC%A6%E5%8F%B7_hu10365973891696206193.png 1024w"
 	loading="lazy"
 	
 	
@@ -2570,10 +2570,10 @@
 	
 ></p>
 <p>常见重定位类型如下</p>
-<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/18-RelocationType.png"
+<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/18-RelocationType.png"
 	width="837"
 	height="509"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/18-RelocationType_hu15317022775746916948.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/18-RelocationType_hu15964554579857220459.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/18-RelocationType_hu15317022775746916948.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/18-RelocationType_hu15964554579857220459.png 1024w"
 	loading="lazy"
 	
 	
@@ -3010,10 +3010,10 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/19-RelocationTable-printRelocationTable.png"
+</div><p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/19-RelocationTable-printRelocationTable.png"
 	width="934"
 	height="369"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/19-RelocationTable-printRelocationTable_hu11699375933962584660.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/19-RelocationTable-printRelocationTable_hu5643326500374936811.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/19-RelocationTable-printRelocationTable_hu11699375933962584660.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/19-RelocationTable-printRelocationTable_hu5643326500374936811.png 1024w"
 	loading="lazy"
 	
 	
@@ -3064,10 +3064,10 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>3ee8和3eec分别在init_array和fini_array段,均为RELATIVE类型重定位项</p>
-<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/20-init_array%E5%92%8Cfini_array.png"
+<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/20-init_array%E5%92%8Cfini_array.png"
 	width="1184"
 	height="563"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/20-init_array%E5%92%8Cfini_array_hu4715139332889118973.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/20-init_array%E5%92%8Cfini_array_hu7920800601007787529.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/20-init_array%E5%92%8Cfini_array_hu4715139332889118973.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/20-init_array%E5%92%8Cfini_array_hu7920800601007787529.png 1024w"
 	loading="lazy"
 	
 	
@@ -3078,10 +3078,10 @@
 ></p>
 <p>3fec, 3fe0,3fe4,3fe8,3ff0是GOT表项, 其中3fec (main_ptr) 是RELATIVE类型,其他均为GLOB_DAT类型</p>
 <p>表项填充的函数为虚拟extern段中函数的地址,该段在内存中实际不存在</p>
-<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/21-got.png"
+<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/21-got.png"
 	width="1191"
 	height="542"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/21-got_hu9187249700065366400.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/21-got_hu9883555388429463256.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/21-got_hu9187249700065366400.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/21-got_hu9883555388429463256.png 1024w"
 	loading="lazy"
 	
 	
@@ -3092,10 +3092,10 @@
 ></p>
 <p>4000,4004是plt表项, 均为JUMP_SLOT类型, 400c是dso_handle, 为RELATIVE类型</p>
 <p>got.plt表填充的也是外部函数地址,在虚拟extern段</p>
-<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/22-plt.png"
+<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/22-plt.png"
 	width="1127"
 	height="623"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/22-plt_hu1376848358450023564.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/22-plt_hu8474268248410665515.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/22-plt_hu1376848358450023564.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/22-plt_hu8474268248410665515.png 1024w"
 	loading="lazy"
 	
 	
@@ -3105,10 +3105,10 @@
 	
 ></p>
 <p>在elf文件末尾,ida自动追加extern段(该段在内存中不存在,仅供分析)</p>
-<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/23-EndOfELF.png"
+<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/23-EndOfELF.png"
 	width="1442"
 	height="657"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/23-EndOfELF_hu8598993222644014502.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/23-EndOfELF_hu694178669020385446.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/23-EndOfELF_hu8598993222644014502.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/23-EndOfELF_hu694178669020385446.png 1024w"
 	loading="lazy"
 	
 	
@@ -3920,10 +3920,10 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/24-DynamicSegment-printDynamicSegment.png"
+</div><p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/24-DynamicSegment-printDynamicSegment.png"
 	width="614"
 	height="769"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/24-DynamicSegment-printDynamicSegment_hu2485353952435940958.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/24-DynamicSegment-printDynamicSegment_hu6310558908195580600.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/24-DynamicSegment-printDynamicSegment_hu2485353952435940958.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/24-DynamicSegment-printDynamicSegment_hu6310558908195580600.png 1024w"
 	loading="lazy"
 	
 	
@@ -4053,10 +4053,10 @@
 </div><p>手工查找流程示例:</p>
 <p>由于x86_64下gcc编译的elf程序默认只使用gnu.hash,以Android NDK得到的64位so为例</p>
 <p>找到.hash节,发现nbucket=nchain=0x36</p>
-<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/25-HashTable-libfindflagso.png"
+<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/25-HashTable-libfindflagso.png"
 	width="1859"
 	height="759"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/25-HashTable-libfindflagso_hu14455049801817894435.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/25-HashTable-libfindflagso_hu13187833987399462848.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/25-HashTable-libfindflagso_hu14455049801817894435.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/25-HashTable-libfindflagso_hu13187833987399462848.png 1024w"
 	loading="lazy"
 	
 		alt="HashTable-libfindflagso"
@@ -4068,10 +4068,10 @@
 	
 ></p>
 <p>根据elfhash计算bucket下标, index=hash%nbucket =48</p>
-<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/26-HashTable-%E8%AE%A1%E7%AE%97bucket%E4%B8%8B%E6%A0%87.png"
+<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/26-HashTable-%E8%AE%A1%E7%AE%97bucket%E4%B8%8B%E6%A0%87.png"
 	width="981"
 	height="734"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/26-HashTable-%E8%AE%A1%E7%AE%97bucket%E4%B8%8B%E6%A0%87_hu12188811193229417954.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/26-HashTable-%E8%AE%A1%E7%AE%97bucket%E4%B8%8B%E6%A0%87_hu10943311743513086951.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/26-HashTable-%E8%AE%A1%E7%AE%97bucket%E4%B8%8B%E6%A0%87_hu12188811193229417954.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/26-HashTable-%E8%AE%A1%E7%AE%97bucket%E4%B8%8B%E6%A0%87_hu10943311743513086951.png 1024w"
 	loading="lazy"
 	
 		alt="HashTable-计算bucket下标"
@@ -4084,10 +4084,10 @@
 ></p>
 <p>由于bucket项大小为4字节,从0x960开始+48*4=0xA20</p>
 <p>得到动态符号表下标为0xE(14), 查找符号表正好对应dlopen函数</p>
-<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/27-HashTable-%E6%89%BE%E5%88%B0dlopen.png"
+<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/27-HashTable-%E6%89%BE%E5%88%B0dlopen.png"
 	width="1784"
 	height="750"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/27-HashTable-%E6%89%BE%E5%88%B0dlopen_hu17349695302863692933.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/27-HashTable-%E6%89%BE%E5%88%B0dlopen_hu1156448380389289496.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/27-HashTable-%E6%89%BE%E5%88%B0dlopen_hu17349695302863692933.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/27-HashTable-%E6%89%BE%E5%88%B0dlopen_hu1156448380389289496.png 1024w"
 	loading="lazy"
 	
 		alt="HashTable-找到dlopen"
@@ -4299,10 +4299,10 @@
 <p>详细可参考<a class="link" href="https://juejin.cn/post/7303741790674173989"  target="_blank" rel="noopener"
     >ELF 通过 Sysv Hash &amp; Gnu Hash 查找符号的实现及对比</a>和<a class="link" href="https://www.bilibili.com/video/BV1gq4y1H7P9"  target="_blank" rel="noopener"
     >ELF解析07_哈希表, 导出表</a></p>
-<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/28-HashTable.png"
+<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/28-HashTable.png"
 	width="785"
 	height="724"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/28-HashTable_hu16569476423472612603.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/28-HashTable_hu4172982530889729371.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/28-HashTable_hu16569476423472612603.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/28-HashTable_hu4172982530889729371.png 1024w"
 	loading="lazy"
 	
 	
@@ -4532,10 +4532,10 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/29-HashTable-printHashTable.png"
+</div><p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/29-HashTable-printHashTable.png"
 	width="1103"
 	height="655"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/29-HashTable-printHashTable_hu842944848854690588.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/29-HashTable-printHashTable_hu16280096666182164219.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/29-HashTable-printHashTable_hu842944848854690588.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/29-HashTable-printHashTable_hu16280096666182164219.png 1024w"
 	loading="lazy"
 	
 	
@@ -5103,10 +5103,10 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>效果如下</p>
-<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/30-LoadELF.png"
+<p><img src="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/30-LoadELF.png"
 	width="518"
 	height="435"
-	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/30-LoadELF_hu4559097679101421356.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/30-LoadELF_hu13511909122873252737.png 1024w"
+	srcset="/p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/30-LoadELF_hu4559097679101421356.png 480w, /p/elf%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E6%B5%85%E6%9E%90-%E8%A7%A3%E6%9E%90%E5%99%A8%E5%92%8C%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/30-LoadELF_hu13511909122873252737.png 1024w"
 	loading="lazy"
 	
 	
@@ -5190,6 +5190,30 @@
     <h2 class="section-title">相关文章</h2>
     <div class="related-content">
         <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/p/dex%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E8%A7%A3%E6%9E%90-readdex%E8%A7%A3%E6%9E%90%E5%99%A8%E5%AE%9E%E7%8E%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/dex%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E8%A7%A3%E6%9E%90-readdex%E8%A7%A3%E6%9E%90%E5%99%A8%E5%AE%9E%E7%8E%B0/1-dex%E6%96%87%E4%BB%B6%E6%95%B4%E4%BD%93%E7%BB%93%E6%9E%84.578be309c60b9810690dcc195717c187_hu12989458307354425963.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Dex文件结构解析 ReadDex解析器实现"
+                        
+                        data-hash="md5-V4vjCcYLmBBpDcwZVxfBhw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Dex文件结构解析 ReadDex解析器实现</h2>
+        </div>
+    </a>
+</article>
+
             
                 
 <article class="">
